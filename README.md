@@ -37,7 +37,7 @@ If you want to not only view but also run the jupyter notebooks you will need to
 # Version history
 
 - 0.1 creation of the repo and the README file
-- 1.0 refinements to README, analysis of environmental data in [obs_env.ipynb](./obs_env.ipynb) and .gitignore file added
+- 1.0 refinements to README, analysis of environmental data in [obs_env.ipynb](./obs_env.ipynb) and .gitignore file added. Also, made an overview the the data for bacteria that we aim to later predict.
 
 # Sources
 
