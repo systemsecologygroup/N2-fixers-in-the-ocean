@@ -18,6 +18,7 @@ It should be noted that some of these libraries themselves have dependencies tha
 - xarray
 - cartopy
 - matplotlib
+- sklearn
 
 # File structure
 
