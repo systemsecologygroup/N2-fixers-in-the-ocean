@@ -34,6 +34,7 @@ In the main repository folder all jupyter notebook files are contained alongside
 .
 ├── csv
 │   ├── features
+│   ├── filled
 │   └── *.csv
 ├── nc
 │   └── *.nc
@@ -50,8 +51,12 @@ If you want to not only view but also run the jupyter notebooks you will need to
 
 ### Running the files:
 
+#### Running all files:
+
 1.  obs\_\*.ipynb files should be ran in any order
 2.  fill\_\*.ipynb files should be executed to fill the missing values in the created datasets
+
+#### Running only necessary files to create the model
 
 # Version history
 
