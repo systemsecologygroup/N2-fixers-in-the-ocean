@@ -50,6 +50,7 @@ If you want to not only view but also run the jupyter notebooks you will need to
 ### Running the files:
 
 1.  obs\_\*.ipynb files should be ran in any order
+2.  fill\_\*.ipynb files should be executed to fill the missing values in the created datasets
 
 # Version history
 
