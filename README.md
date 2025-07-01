@@ -19,6 +19,7 @@ It should be noted that some of these libraries themselves have dependencies tha
 - cartopy
 - matplotlib
 - sklearn
+- seaborn
 
 # File structure
 
@@ -62,7 +63,7 @@ If you want to not only view but also run the jupyter notebooks you will need to
 
 - 0.1 creation of the repo and the README file
 - 1.0 refinements to README, analysis of environmental data in [obs_env.ipynb](./obs_env.ipynb) and .gitignore file added. Also, made an overview the the data for bacteria that we aim to later predict.
-- 2.0 Joining environmental and bacteria data into a single file. Filling in missing values in both datasets and indexing based on coordinates instead of the default way. Averaged the data in bacterial nifh gene dataset for the same coordinate point.
+- 2.0 Joining environmental and bacteria data into a single file. Filling in missing values. Averaged the data in bacterial nifh gene dataset for the same coordinate point. Started conducting exploritory data analysis to make better model performance more likely and possible.
 
 # Sources
 
