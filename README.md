@@ -37,7 +37,13 @@ In the main repository folder all jupyter notebook files are contained alongside
 │   ├── features
 │   ├── filled
 │   └── *.csv
+├── fill_env.ipynb
+├── fill_nifh.ipynb
+├── join_csv.ipynb
+├── model
+│   └── imputer_knn
 ├── nc
+│   ├── Fe
 │   └── *.nc
 ├── obs_diazotr.ipynb
 ├── obs_env.ipynb
