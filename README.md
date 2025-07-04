@@ -20,6 +20,7 @@ It should be noted that some of these libraries themselves have dependencies tha
 - matplotlib
 - sklearn
 - seaborn
+- joblib (for saving the model and the imputer objects)
 
 # File structure
 
