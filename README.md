@@ -61,7 +61,8 @@ If you want to not only view but also run the jupyter notebooks you will need to
 #### Running all files:
 
 1.  obs\_\*.ipynb files should be ran in any order
-2.  fill\_\*.ipynb files should be executed to fill the missing values in the created datasets
+2.  fill\_\*.ipynb files should be executed to fill the missing values in the created datasets and average the points
+3.  join_csv.ipynb file creates joined datasets, viusalizes the analysis of the distributions and transforms the set
 
 #### Running only necessary files to create the model
 
@@ -76,6 +77,7 @@ If you want to not only view but also run the jupyter notebooks you will need to
 ### Environmental data:
 
 - [World Ocean Atlas 2023 Data(National Center for Environmental Information)](https://www.ncei.noaa.gov/access/world-ocean-atlas-2023/)
+- Iron data
 
 ### Diazatrops data:
 
