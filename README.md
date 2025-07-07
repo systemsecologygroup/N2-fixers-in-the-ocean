@@ -1,8 +1,8 @@
 # Overview
 
-### Version: 0.1
+### Version: 2.0
 
-This repository was created for 2025 Summer internship at the Systems Ecology Group of the Leibniz Centre for Tropical Marine Research in exploration of predicting the biogeograpgy of different types of nitrogen fixers using environmental data using and by means of machine learning. 
+This repository was created for 2025 Summer internship at the Systems Ecology Group of the Leibniz Centre for Tropical Marine Research in exploration of predicting the biogeograpgy of different types of nitrogen fixers using environmental data using and by means of machine learning.
 
 # Requirements
 
@@ -18,6 +18,9 @@ It should be noted that some of these libraries themselves have dependencies tha
 - xarray
 - cartopy
 - matplotlib
+- sklearn
+- seaborn
+- joblib (for saving the model and the imputer objects)
 
 # File structure
 
@@ -33,8 +36,15 @@ In the main repository folder all jupyter notebook files are contained alongside
 .
 ├── csv
 │   ├── features
+│   ├── filled
 │   └── *.csv
+├── fill_env.ipynb
+├── fill_nifh.ipynb
+├── join_csv.ipynb
+├── model
+│   └── imputer_knn
 ├── nc
+│   ├── Fe
 │   └── *.nc
 ├── obs_diazotr.ipynb
 ├── obs_env.ipynb
@@ -49,18 +59,26 @@ If you want to not only view but also run the jupyter notebooks you will need to
 
 ### Running the files:
 
+#### Running all files:
+
 1.  obs\_\*.ipynb files should be ran in any order
+2.  fill\_\*.ipynb files should be executed to fill the missing values in the created datasets and average the points
+3.  join_csv.ipynb file creates joined datasets, viusalizes the analysis of the distributions and transforms the set
+
+#### Running only necessary files to create the model
 
 # Version history
 
 - 0.1 creation of the repo and the README file
 - 1.0 refinements to README, analysis of environmental data in [obs_env.ipynb](./obs_env.ipynb) and .gitignore file added. Also, made an overview the the data for bacteria that we aim to later predict.
+- 2.0 Joining environmental and bacteria data into a single file. Filling in missing values. Averaged the data in bacterial nifh gene dataset for the same coordinate point. Started conducting exploritory data analysis to make better model performance more likely and possible.
 
 # Sources
 
 ### Environmental data:
 
 - [World Ocean Atlas 2023 Data(National Center for Environmental Information)](https://www.ncei.noaa.gov/access/world-ocean-atlas-2023/)
+- Iron data
 
 ### Diazatrops data:
 
