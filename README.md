@@ -67,6 +67,10 @@ If you want to not only view but also run the jupyter notebooks you will need to
 
 #### Running only necessary files to create the model
 
+1. obs_env.ipynb & obs_nifh.ipynb
+2. fill_env.ipynb & fill_nifh.ipynb
+3. join_csv.ipynb
+
 # Version history
 
 - 0.1 creation of the repo and the README file
@@ -78,8 +82,9 @@ If you want to not only view but also run the jupyter notebooks you will need to
 
 ### Environmental data:
 
-- [World Ocean Atlas 2023 Data(National Center for Environmental Information)](https://www.ncei.noaa.gov/access/world-ocean-atlas-2023/)
-- Iron data
+- $O^2$, $N^2$, $P$, Temperature [World Ocean Atlas 2023 Data(National Center for Environmental Information)](https://www.ncei.noaa.gov/access/world-ocean-atlas-2023/)
+- Iron data is from a flashdrive
+- Radiation data [ERA5-Land hourly data from 1950 to present](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land?tab=download)
 
 ### Diazatrops data:
 
