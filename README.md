@@ -67,6 +67,16 @@ If you want to not only view but also run the jupyter notebooks you will need to
 
 #### Running only necessary files to create the model
 
+```
+           obs_diazotr
+
+obs_rad───>obs_env──────>fill_env──┐
+                                   │───>join_csv─────>
+           obs_nifh─────>fill_nifh─┘
+
+           obs_nifh_nc
+```
+
 1. obs_env.ipynb & obs_nifh.ipynb
 2. fill_env.ipynb & fill_nifh.ipynb
 3. join_csv.ipynb
