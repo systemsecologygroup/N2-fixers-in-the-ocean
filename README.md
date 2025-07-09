@@ -68,13 +68,13 @@ If you want to not only view but also run the jupyter notebooks you will need to
 #### Running only necessary files to create the model
 
 ```
-           obs_diazotr
+obs_diazotr
 
-obs_rad───>obs_env──────>fill_env──┐
-                                   │───>join_csv─────>
-           obs_nifh─────>fill_nifh─┘
+obs_env──────>fill_env──┐
+                        │───>models
+obs_nifh─────>fill_nifh─┘
 
-           obs_nifh_nc
+obs_nifh_nc
 ```
 
 1. obs_env.ipynb & obs_nifh.ipynb
@@ -94,7 +94,7 @@ obs_rad───>obs_env──────>fill_env──┐
 
 - $O^2$, $N^2$, $P$, Temperature [World Ocean Atlas 2023 Data(National Center for Environmental Information)](https://www.ncei.noaa.gov/access/world-ocean-atlas-2023/)
 - Iron data is from a flashdrive
-- Radiation data [ERA5-Land hourly data from 1950 to present](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-land?tab=download)
+- [ERA5 monthly averaged data on single levels from 1940 to present](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels-monthly-means?tab=overview) 2024 all months
 
 ### Diazatrops data:
 
