@@ -1,6 +1,6 @@
 # Overview
 
-### Version: 2.0
+### Version: 3.0
 
 This repository was created for 2025 Summer internship at the Systems Ecology Group of the Leibniz Centre for Tropical Marine Research in exploration of predicting the biogeograpgy of different types of nitrogen fixers using environmental data using and by means of machine learning.
 
@@ -64,21 +64,38 @@ If you want to not only view but also run the jupyter notebooks you will need to
 1.  obs\_\*.ipynb files should be ran in any order
 2.  fill\_\*.ipynb files should be executed to fill the missing values in the created datasets and average the points
 3.  join_csv.ipynb file creates joined datasets, viusalizes the analysis of the distributions and transforms the set
+4.  models.ipynb training different models to see which performs the best
 
 #### Running only necessary files to create the model
+
+```
+obs_diazotr
+
+obs_env──────>fill_env──┐
+                        │───>join_csv───>models
+obs_nifh─────>fill_nifh─┘
+
+obs_nifh_nc
+```
+
+1. obs_env.ipynb & obs_nifh.ipynb
+2. fill_env.ipynb & fill_nifh.ipynb
+3. join_csv.ipynb
 
 # Version history
 
 - 0.1 creation of the repo and the README file
 - 1.0 refinements to README, analysis of environmental data in [obs_env.ipynb](./obs_env.ipynb) and .gitignore file added. Also, made an overview the the data for bacteria that we aim to later predict.
 - 2.0 Joining environmental and bacteria data into a single file. Filling in missing values. Averaged the data in bacterial nifh gene dataset for the same coordinate point. Started conducting exploritory data analysis to make better model performance more likely and possible.
+- 3.0 solar data added to model features. Fruther refinements to the data analysis and transformation. Initial model training attempts.
 
 # Sources
 
 ### Environmental data:
 
-- [World Ocean Atlas 2023 Data(National Center for Environmental Information)](https://www.ncei.noaa.gov/access/world-ocean-atlas-2023/)
-- Iron data
+- $O^2$, $N^2$, $P$, Temperature [World Ocean Atlas 2023 Data(National Center for Environmental Information)](https://www.ncei.noaa.gov/access/world-ocean-atlas-2023/)
+- Iron data is from a flashdrive
+- [ERA5 monthly averaged data on single levels from 1940 to present](https://cds.climate.copernicus.eu/datasets/reanalysis-era5-single-levels-monthly-means?tab=overview) 2024 all months
 
 ### Diazatrops data:
 
