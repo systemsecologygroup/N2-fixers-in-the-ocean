@@ -88,7 +88,7 @@ obs_nifh_nc
 - 1.0 refinements to README, analysis of environmental data in [obs_env.ipynb](./obs_env.ipynb) and .gitignore file added. Also, made an overview the the data for bacteria that we aim to later predict.
 - 2.0 Joining environmental and bacteria data into a single file. Filling in missing values. Averaged the data in bacterial nifh gene dataset for the same coordinate point. Started conducting exploritory data analysis to make better model performance more likely and possible.
 - 3.0 solar data added to model features. Fruther refinements to the data analysis and transformation. Initial model training attempts.
-- 4.0 made it possible to easily try out different models and compare results to find the best one
+- 4.0 made it possible to easily try out different models and compare results to find the best one. Predicted values for the entire set of environmental data. Comapred models and datasets in plots.
 
 # Sources
 
