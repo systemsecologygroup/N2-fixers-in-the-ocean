@@ -90,7 +90,7 @@ obs_nifh_nc
 - 2.0 Joining environmental and bacteria data into a single file. Filling in missing values. Averaged the data in bacterial nifh gene dataset for the same coordinate point. Started conducting exploritory data analysis to make better model performance more likely and possible.
 - 3.0 solar data added to model features. Fruther refinements to the data analysis and transformation. Initial model training attempts.
 - 4.0 made it possible to easily try out different models and compare results to find the best one. Predicted values for the entire set of environmental data. Comapred models and datasets in plots.
-- 5.0 after initial model training, the need for more diverse data was discovered. Added bacterial data from more sources.
+- 5.0 after initial model training, the need for more diverse data was discovered. Added bacterial data from more sources. New versions of the exisitng datasets were tried and more visualizations added in the models file to better compare models and datasets.
 
 # Sources
 
