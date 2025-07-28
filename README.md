@@ -1,6 +1,6 @@
 # Overview
 
-### Version: 5.0
+### Version: 5.1
 
 This repository was created for 2025 Summer internship at the Systems Ecology Group of the Leibniz Centre for Tropical Marine Research in exploration of predicting the biogeograpgy of different types of nitrogen fixers using environmental data using and by means of machine learning.
 
@@ -91,6 +91,7 @@ obs_nifh_nc
 - 3.0 solar data added to model features. Fruther refinements to the data analysis and transformation. Initial model training attempts.
 - 4.0 made it possible to easily try out different models and compare results to find the best one. Predicted values for the entire set of environmental data. Comapred models and datasets in plots.
 - 5.0 after initial model training, the need for more diverse data was discovered. Added bacterial data from more sources. New versions of the exisitng datasets were tried and more visualizations added in the models file to better compare models and datasets.
+- 5.1 Further refinements of the projects code and the model as well as the visualizations
 
 # Sources
 
