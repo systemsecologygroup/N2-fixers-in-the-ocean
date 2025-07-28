@@ -82,6 +82,7 @@ obs_nifh_nc
 1. obs_env.ipynb & obs_nifh.ipynb
 2. fill_env.ipynb & fill_nifh.ipynb
 3. join_csv.ipynb
+4. models.ipynb
 
 # Version history
 
