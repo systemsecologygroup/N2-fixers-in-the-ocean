@@ -1,5 +1,12 @@
 # How to add new bacterial and environmental data to the project
 ## Environmental data
+Here I describe the format of environmetal data and how to add more input columns if needed.
+
+Here data is way more varried from my experience. So, modifications likely will have to be more dependant on the exact format and contents of the dataset. But 2 functions that can be useful if the data is in a pandas dataframe are: *removeEmptyRows*, *removeRed*.
+
+They allow to remove not needed columsn and remove empty rows in the resulting dataset right after.
+
+Another consideration is renaming the latitude and longitude columns as well as making sure their range is withing the desired. If a new column is added it needs to be included in column lists throughout the file to make sure that its data is read and used.
 
 ### Expected format of data:
 This is in what state the data is saved at the end of ***obs_env.ipynb*** file before further modifications.
@@ -8,7 +15,6 @@ This is in what state the data is saved at the end of ***obs_env.ipynb*** file b
 | --------- | -------------------- | -------------------- | ----- | ----- | ----- | ----- | ----- | ----- |
 | data type | integer -180 to +180 | integer -180 to +180 | float | float | float | float | float | float |
 ## Bacterial data
-
 This section is more crutial as additional NifH data is more likely and more important. The main modifications to be done are in the ***obs_nifh.ipynb*** file.
 
 ### Expected format of data:
