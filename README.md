@@ -16,6 +16,7 @@ It should be noted that some of these libraries themselves have dependencies tha
 - numpy
 - pandas
 - xarray
+(also a net cdf package should be present in the system for instance netCDF4)
 - cartopy
 - matplotlib
 - sklearn
