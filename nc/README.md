@@ -9,3 +9,5 @@ the exact files to be in this folder:
 ├── woa23_all_p00_01.nc
 └── woa23_decav_t00_01.nc
 ```
+
+The 4 files that start with *woa* contain environmental data and are mainly used for visualizations.
