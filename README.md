@@ -35,6 +35,7 @@ In the main repository folder all jupyter notebook files are contained alongside
 
 ```
 .
+├── addinstructions.md
 ├── csv
 │   ├── datasets
 │   ├── features
