@@ -1,6 +1,6 @@
 # Overview
 
-### Version: 5.0
+### Version: 5.1
 
 This repository was created for 2025 Summer internship at the Systems Ecology Group of the Leibniz Centre for Tropical Marine Research in exploration of predicting the biogeograpgy of different types of nitrogen fixers using environmental data using and by means of machine learning.
 
@@ -16,6 +16,7 @@ It should be noted that some of these libraries themselves have dependencies tha
 - numpy
 - pandas
 - xarray
+(also a net cdf package should be present in the system for instance netCDF4)
 - cartopy
 - matplotlib
 - sklearn
@@ -82,6 +83,7 @@ obs_nifh_nc
 1. obs_env.ipynb & obs_nifh.ipynb
 2. fill_env.ipynb & fill_nifh.ipynb
 3. join_csv.ipynb
+4. models.ipynb
 
 # Version history
 
@@ -91,6 +93,7 @@ obs_nifh_nc
 - 3.0 solar data added to model features. Fruther refinements to the data analysis and transformation. Initial model training attempts.
 - 4.0 made it possible to easily try out different models and compare results to find the best one. Predicted values for the entire set of environmental data. Comapred models and datasets in plots.
 - 5.0 after initial model training, the need for more diverse data was discovered. Added bacterial data from more sources. New versions of the exisitng datasets were tried and more visualizations added in the models file to better compare models and datasets.
+- 5.1 Further refinements of the projects code and the model as well as the visualizations. Instructions for adding new data added in [adding new data](./addinstructions.md)
 
 # Sources
 
@@ -105,3 +108,4 @@ obs_nifh_nc
 - [Global oceanic diazotroph database version 2 and elevated estimate of global oceanic N2 fixation](https://essd.copernicus.org/articles/15/3673/2023/essd-15-3673-2023-assets.html)
 - [Database of diazotrophs in global ocean: abundance, biomass and nitrogen fixation rates](https://doi.pangaea.de/10.1594/PANGAEA.774851)
 - [Data‐Driven Modeling of the Distribution of Diazotrophs in the Global Ocean](https://agupubs.onlinelibrary.wiley.com/doi/pdf/10.1029/2019GL084376)
+- Biological nitrogen fixation detected under Antarctic sea ice (Takuhei Shiozaki et all)
