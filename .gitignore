@@ -1,4 +1,6 @@
 #the net CDF files are large and not necessary to keep changes of as we know the source
 *.nc
 #similarly we are not keeping track of files in the csv folder
-*.csv
+csv/datasets/*
+csv/features/*
+csv/filled/*
