@@ -2,10 +2,21 @@ import matplotlib
 import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
+import seaborn as sns
 
 def plotColsOnMap(cols,df, log_range = False, constant = (10**6)):
     """
-    Plot specidied column on a map
+    Plot specified column on a map. Latitude and longitude range should be -180 to 180 and -90 to 90.
+
+    Args:
+        cols: list of column names
+        df: pandas dataframe
+        log_range: True/False(defualt False)
+        constant: constant by which to mutliply all values(default 10**6)
+
+    Returns:
+        nothing
+
     """
     #the index is reset from using lat and lon just in case
     df_reset = df.reset_index()
@@ -50,3 +61,60 @@ def plotColsOnMap(cols,df, log_range = False, constant = (10**6)):
 
     plt.tight_layout()
     plt.show()
+
+def histCols(cols,df, transf = (lambda x: x), suptitle=""):
+    """
+    Plot specified columns of a dataframe as a histogram
+
+    Args:
+        cols: list of column names
+        df: pandas dataframe
+        transf: (default (lambda x: x))
+        suptitle: suptitle text
+
+    Returns:
+        nothing
+    """
+    #the index is reset from using lat and lon just in case
+    df_reset = df.reset_index()
+
+    #the number of rows varies depending on the number of columns to plot
+    rows = (len(cols)//2) + (len(cols)%2==1)
+
+    #a set of subplots is created
+    fig, axes = plt.subplots(nrows=rows, ncols=2, figsize=(20, rows*4))
+
+    #we plot each column
+    axes = axes.flatten()
+    for i, col in enumerate(cols):
+        ax = axes[i]#subplot
+
+        valid_data = df_reset[df_reset[col].notna()]
+        transf(valid_data[col]).hist(bins=50, ax=ax)
+
+        ax.set_title(col)
+    if(len(suptitle)>0):
+        plt.suptitle(suptitle, fontsize=16)
+
+    plt.tight_layout()
+    plt.show()
+
+def plotCorMatr(cols, df):
+    """
+    Creates a display of the correlation matrix of specified columns
+
+    Args:
+        cols: list of column names
+        df: pandas dataframe
+
+    Returns:
+        nothing
+    """
+    #we create the matrix
+    mtrx = df[cols].corr()
+    #a heatmap is created to show the results
+    sns.heatmap(mtrx, cmap="YlGnBu", annot=True)
+
+    plt.show()
+
+    return mtrx
