@@ -6,3 +6,4 @@ csv/features/*
 csv/filled/*
 #this if for the python virtual environment
 .venv
+*/__pycache__/*
