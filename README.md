@@ -22,6 +22,9 @@ It should be noted that some of these libraries themselves have dependencies tha
 - sklearn
 - seaborn
 - joblib (for saving the model and the imputer objects)
+- netcdf4
+
+You can find the installation guide for the virtual python environment under [setup_venv.md](./setup_venv.md)
 
 # File structure
 

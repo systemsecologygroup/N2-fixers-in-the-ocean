@@ -4,3 +4,5 @@
 csv/datasets/*
 csv/features/*
 csv/filled/*
+#this if for the python virtual environment
+.venv
