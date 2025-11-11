@@ -63,29 +63,31 @@ def filterDepth(df, depth = 50, depth_col = "DEPTH (m)"):
     df_depth = df[df_mask]
     return df_depth
 
-def roundCoord(cols, df, lat="LATITUDE", lon="LONGITUDE"):
+def roundCoord(cols, df, coord_cols=["LATITUDE","LONGITUDE"]):
     """
     Round the coordinate columns and returns the resulting dataframe with coordinate and specified columns kept.
 
     Args:
         cols: list of column names to keep that are not coordinates
         df: pandas dataframe
-        lat: latitude column name(default 'LATITUDE')
-        lon: longitude column name(defualt 'LONGITUDE')
-        
+        coord_cols: columns to round in the process (default = ["LATITUDE","LONGITUDE"])
     Returns:
         modified dataframe
     """
     if df is None:
         raise ValueError("Dataframe passed is None")
-    for col in cols+[lat]+[lon]:
+    for col in cols+coord_cols:
         if col not in df:
             raise KeyError("column {0} is not found in dataframe".format(col))
+        
     #we separate the data and coordinates in order to round the coordinate grid
-    lat_rnd = np.round(df[lat])
-    lon_rnd = np.round(df[lon])
+    coordinates = []
+    for col in coord_cols:
+        coordinates.append(np.round(df[col]).astype(int))
+
+    coord_data = pd.concat(coordinates, axis=1)
     data = df[cols]
 
     #we join the data back together
-    df_rnd = pd.concat([lat_rnd, lon_rnd, data], axis=1)
+    df_rnd = pd.concat([coord_data, data], axis=1)
     return df_rnd
