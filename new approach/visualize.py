@@ -47,7 +47,7 @@ def plotColsOnMap(cols,df, log_range = False, constant = (10**6)):
             valid_data["LATITUDE"],
             c=valid_data[col]*constant,#data is multiplied by a constant
             cmap="viridis",
-            s=40,
+            s=5,
             transform=ccrs.PlateCarree(),
             norm=norm
         )

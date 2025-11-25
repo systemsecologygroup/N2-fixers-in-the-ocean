@@ -4,9 +4,29 @@ TRAINING.PY
 This file stores the scalers, transformers used for training the models and functions assoicated with them
 '''
 
+import pandas as pd
+import numpy as np
+
+
+"""
+===================================================================================================
+Mathematical transformer classes used in both join_csv.ipynb and models.ipynb
+
+Here I applied different transformations for each column, this allows for maximum 
+customization and tuning and also to easily revert back the changes afterwards.
+===================================================================================================
+"""
 class SimpleTransformer():
     '''
     Simple transformer class used for training the model. Applies mathematical functions to transform the dataset.
+
+    Attributes:
+        transforms: dictionary of transform functions for each column
+        inverse_transforms: dictionary of inverse transform functions
+
+    Methods: 
+        transform: transform the data and return the resulting df
+        inverse transform: reverse the transformation
 
     '''
 
@@ -37,7 +57,7 @@ class SimpleTransformer():
     }
 
     def __init__(self):
-        print("")
+        print("Simple transformer initiated")
 
     ''' 
     apply transformations to a set of columns based on a dictionary of the format:
@@ -65,6 +85,10 @@ class SimpleTransformer():
 class SecondTransformer():
     '''
     Second transformer calls
+
+     Attributes:
+        transforms: dictionary of transform functions for each column
+        inverse_transforms: dictionary of inverse transform functions
     '''
     transforms = {
         "O2":(lambda x: np.log(x*(10**6)+10)),
@@ -93,7 +117,7 @@ class SecondTransformer():
     }
 
     def __init__(self):
-        print("")
+        print("Second transformer initiated")
 
     ''' 
     apply transformations to a set of columns based on a dictionary of the format:
@@ -117,3 +141,47 @@ class SecondTransformer():
     '''
     def inverse_transform(self,df):
         return self.__applyTransormations(self.inverse_transforms, df)
+    
+"""
+===================================================================================================
+Outlier removal functions used in join_csv.ipynb
+===================================================================================================
+"""
+#these 2 values are needed to find outliers within a given column
+def getIQR(col, df):
+    Q1 = np.percentile(df[col].dropna(), 25, method="midpoint")
+    Q3 = np.percentile(df[col].dropna(), 75, method="midpoint")
+    IQR = Q3 - Q1
+    return {"upper":Q3+1.5*IQR, "lower":Q1- 1.5*IQR, "IQR": IQR}
+
+#this sets all outliers as Nan in a given single column
+def setOutliersAsNaN(col, df):
+    df[col] = pd.to_numeric(df[col], errors='coerce')
+    dct = getIQR(col,df)
+    upper = dct["upper"]
+    lower = dct["lower"]
+
+    if (np.isnan(upper)) or (np.isnan(lower)):
+        raise ValueError("Got nan value instead of boundary")
+
+    indicies = np.where((df[col]>upper) | (df[col]<lower))[0]
+
+    print("{0}: Lower bound: {1}; Upper Bound{2}; Outlier count: {3}".format(col, lower, upper, len(indicies)))
+
+    df.loc[indicies, col] = np.nan    
+
+#this sets outliers as nan in several columns
+def setOutliersAsNaNinCols(cols, df):
+    for col in cols:
+        setOutliersAsNaN(col,df)
+
+"""
+===================================================================================================
+Correlation scoring for linear correlation matricies
+===================================================================================================
+"""
+def corScore(x,y,mtrx):
+    subset = mtrx.loc[x,y]
+    sq_avg = (subset**2).values.sum() / subset.size
+    print("{0}: correlation mean square average = {1}".format(y, sq_avg))
+    return sq_avg
