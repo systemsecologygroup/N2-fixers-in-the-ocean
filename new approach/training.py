@@ -149,6 +149,18 @@ Outlier removal functions used in join_csv.ipynb
 """
 #these 2 values are needed to find outliers within a given column
 def getIQR(col, df):
+    '''
+    Get upper lower and IQR values  to find outliers within a given colum
+
+    Args: 
+        col: string for column name
+        df: dataframe
+
+    Returns:
+        upper: upper limit
+        lower: lower limit
+        IQR: IQR
+    '''
     Q1 = np.percentile(df[col].dropna(), 25, method="midpoint")
     Q3 = np.percentile(df[col].dropna(), 75, method="midpoint")
     IQR = Q3 - Q1
@@ -156,6 +168,12 @@ def getIQR(col, df):
 
 #this sets all outliers as Nan in a given single column
 def setOutliersAsNaN(col, df):
+    '''
+    Sets all outliers as Nan in a given single column
+    
+    :param col: column name where to set outliers as NaN
+    :param df: Dataframe
+    '''
     df[col] = pd.to_numeric(df[col], errors='coerce')
     dct = getIQR(col,df)
     upper = dct["upper"]
@@ -172,6 +190,12 @@ def setOutliersAsNaN(col, df):
 
 #this sets outliers as nan in several columns
 def setOutliersAsNaNinCols(cols, df):
+    '''
+    Sets outliers as nan in several columns
+    
+    :param cols: Columns to set outliers as NaN at
+    :param df: Dataframe
+    '''
     for col in cols:
         setOutliersAsNaN(col,df)
 
@@ -181,6 +205,16 @@ Correlation scoring for linear correlation matricies
 ===================================================================================================
 """
 def corScore(x,y,mtrx):
+    '''
+    Score the matrix by avergaing the squares of values
+    
+    :param x: rows of the matrix to track
+    :param y: columns of the matrix to track
+    :param mtrx: correlation matrix to score
+
+    Returns:
+        correlation score
+    '''
     subset = mtrx.loc[x,y]
     sq_avg = (subset**2).values.sum() / subset.size
     print("{0}: correlation mean square average = {1}".format(y, sq_avg))
