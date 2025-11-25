@@ -219,3 +219,59 @@ def corScore(x,y,mtrx):
     sq_avg = (subset**2).values.sum() / subset.size
     print("{0}: correlation mean square average = {1}".format(y, sq_avg))
     return sq_avg
+
+"""
+===================================================================================================
+Getting the data from the datasets and formatting it
+===================================================================================================
+"""
+def getData(
+        feature, 
+        dataset, 
+        x_columns=['O2', 'T', 'N', 'P', 'Fe', 'solar','N:P'], 
+        y_columns=['Trichodesmium nifH Gene (x106 copies m-3)','UCYN-A nifH Gene (x106 copies m-3)','UCYN-B nifH Gene (x106 copies m-3)']
+    ):
+    '''
+    Get subset of dataset where feature is not null
+    '''
+    # We need to make sure that all values left are not null. So we take a subset of values where feature is not NaN
+    cleared = dataset.dropna(subset=(feature+x_columns))[x_columns+y_columns]
+    # To check reuslts I print the NaN count
+    imp_cols = feature+x_columns
+    print("after getting data NaN count is: {0}".format(cleared[imp_cols].isnull().sum().sum()))
+    return cleared
+
+from sklearn.metrics import root_mean_squared_error
+
+def train_model(model, X_train, y_train, model_name="-"):
+    #we train the model
+    model.fit(X_train, y_train)
+
+    #get the preictions
+    predictions = model.predict(X_train)
+
+    error_rate = root_mean_squared_error(y_train, predictions)
+    print("Model {0} achieved RMSE score of {1} on train dataset".format(model_name, error_rate))
+
+    return error_rate
+
+"""
+===================================================================================================
+Our own model that is stupid on purpose to use as a benchmark
+===================================================================================================
+"""
+class DummyModel():
+    '''
+    This is a "Dummy model" desiged to perform as bad as possible by discarding all inputs and 
+    just reproducing the average of the training data.
+    '''
+    value=None
+
+    def __init__(self):
+        self.value=None
+
+    def fit(self, X_train, y_train):
+        self.value = np.mean(y_train)
+
+    def predict(self, X_train):
+        return np.full(len(X_train), self.value)

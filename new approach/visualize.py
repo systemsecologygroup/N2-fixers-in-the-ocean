@@ -4,7 +4,7 @@ import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 import seaborn as sns
 
-def plotColsOnMap(cols,df, log_range = False, constant = (10**6)):
+def plotColsOnMap(cols,df, log_range = False, constant = (10**6), cmap="viridis",min_lim=None, max_lim=None, transf = (lambda x: x)):
     """
     Plot specified column on a map. Latitude and longitude range should be -180 to 180 and -90 to 90.
 
@@ -45,11 +45,13 @@ def plotColsOnMap(cols,df, log_range = False, constant = (10**6)):
         sc = ax.scatter(
             valid_data["LONGITUDE"],
             valid_data["LATITUDE"],
-            c=valid_data[col]*constant,#data is multiplied by a constant
-            cmap="viridis",
+            c=transf(valid_data[col]*constant),#data is multiplied by a constant
+            cmap=cmap,
             s=5,
             transform=ccrs.PlateCarree(),
-            norm=norm
+            norm=norm,
+            vmin=min_lim,
+            vmax=max_lim
         )
 
         #we want to see the entire globe and not just the values 
