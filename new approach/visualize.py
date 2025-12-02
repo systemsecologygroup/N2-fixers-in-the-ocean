@@ -101,7 +101,7 @@ def histCols(cols,df, transf = (lambda x: x), suptitle=""):
     plt.tight_layout()
     plt.show()
 
-def plotCorMatr(cols, df, cmap="YlGnBu"):
+def plotCorMatr(cols, df, cmap="vlag"):
     """
     Creates a display of the correlation matrix of specified columns
 
