@@ -228,12 +228,14 @@ Getting the data from the datasets and formatting it
 def getData(
         feature, 
         dataset, 
-        x_columns=['O2', 'T', 'N', 'P', 'Fe', 'solar','N:P'], 
+        x_columns=None, 
         y_columns=['Trichodesmium nifH Gene (x106 copies m-3)','UCYN-A nifH Gene (x106 copies m-3)','UCYN-B nifH Gene (x106 copies m-3)']
     ):
     '''
     Get subset of dataset where feature is not null
     '''
+    if x_columns == None:
+        x_columns = list(set(dataset.columns)-set(y_columns))
     # We need to make sure that all values left are not null. So we take a subset of values where feature is not NaN
     cleared = dataset.dropna(subset=(feature+x_columns))[x_columns+y_columns]
     # To check reuslts I print the NaN count
