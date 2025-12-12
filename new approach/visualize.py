@@ -48,6 +48,7 @@ def plotColsOnMap(
         ax.add_feature(cfeature.COASTLINE)
         valid_data = df_reset[df_reset[col].notna()]
 
+        #the depth when specified limits the depth visualized to a specifc depth
         if specific_depth != None:
             mask = valid_data["DEPTH (m)"]==specific_depth
             valid_data=valid_data[mask]
