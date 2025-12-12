@@ -4,7 +4,19 @@ import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 import seaborn as sns
 
-def plotColsOnMap(cols,df, log_range = False, constant = (10**6), cmap="viridis",min_lim=None, max_lim=None, transf = (lambda x: x)):
+def plotColsOnMap(
+        cols,
+        df, 
+        log_range = False, 
+        constant = (10**6), 
+        cmap="viridis",
+        min_lim=None, 
+        max_lim=None, 
+        transf = (lambda x: x), 
+        specific_depth=None,
+        colorbar_label = "",
+        title=""
+    ):
     """
     Plot specified column on a map. Latitude and longitude range should be -180 to 180 and -90 to 90.
 
@@ -36,6 +48,10 @@ def plotColsOnMap(cols,df, log_range = False, constant = (10**6), cmap="viridis"
         ax.add_feature(cfeature.COASTLINE)
         valid_data = df_reset[df_reset[col].notna()]
 
+        if specific_depth != None:
+            mask = valid_data["DEPTH (m)"]==specific_depth
+            valid_data=valid_data[mask]
+
         #this sets the logorithmic scale to be exactly like in the paper instead of default
         norm = matplotlib.colors.LogNorm(vmin=1e3, vmax=1e11)
         if(not log_range):
@@ -58,9 +74,12 @@ def plotColsOnMap(cols,df, log_range = False, constant = (10**6), cmap="viridis"
         ax.set_xlim(-180,180)
         ax.set_ylim(-90,90)
 
-        plt.colorbar(sc, ax=ax, label="nifH Gene (copies m-3)")
-        ax.set_title(col.replace("x106 ",""))
+        
 
+        plt.colorbar(sc, ax=ax, label=colorbar_label)
+        ax.set_title(col.replace("x106 ",""))
+    
+    plt.suptitle(title)
     plt.tight_layout()
     plt.show()
 
