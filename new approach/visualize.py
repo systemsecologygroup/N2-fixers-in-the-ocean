@@ -25,6 +25,13 @@ def plotColsOnMap(
         df: pandas dataframe
         log_range: True/False(defualt False)
         constant: constant by which to mutliply all values(default 10**6)
+        cmap: default"viridis"
+        min_lim: minimum value to plot (default None) 
+        max_lim: maximum value to plot (default None)
+        transf = (lambda x: x) transformation function identity by defualt
+        specific_depth: specific depth to plot(default is None so all depths)
+        colorbar_label: label for the colorbar
+        title: title for the plot overall
 
     Returns:
         nothing
@@ -54,15 +61,15 @@ def plotColsOnMap(
             valid_data=valid_data[mask]
 
         #this sets the logorithmic scale to be exactly like in the paper instead of default
-        norm = matplotlib.colors.LogNorm(vmin=1e3, vmax=1e11)
-        if(not log_range):
-            norm = None
+        norm = None        
+        if log_range:
+            norm = matplotlib.colors.LogNorm(vmin=1e3, vmax=1e11)
 
         #scatter plot is created
         sc = ax.scatter(
             valid_data["LONGITUDE"],
             valid_data["LATITUDE"],
-            c=transf(valid_data[col]*constant),#data is multiplied by a constant
+            c=transf(((valid_data[col])*constant)),#data is multiplied by a constant and transformed
             cmap=cmap,
             s=5,
             transform=ccrs.PlateCarree(),
@@ -73,12 +80,10 @@ def plotColsOnMap(
 
         #we want to see the entire globe and not just the values 
         ax.set_xlim(-180,180)
-        ax.set_ylim(-90,90)
-
-        
+        ax.set_ylim(-90,90)        
 
         plt.colorbar(sc, ax=ax, label=colorbar_label)
-        ax.set_title(col.replace("x106 ",""))
+        ax.set_title(col)
     
     plt.suptitle(title)
     plt.tight_layout()
