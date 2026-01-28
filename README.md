@@ -61,7 +61,13 @@ In the main repository folder all jupyter notebook files are contained alongside
 
 # Set up
 
-If you want to not only view but also run the jupyter notebooks you will need to make sure that all libraries listed above are installed. Then download all the datasets used for the project from the sources listed below and put different file types in corresponding folders according to the file structure of the repo.
+If you want to not only view but also run the jupyter notebooks you will need to make sure that all libraries listed above are installed. Then download all the datasets used for the project from the sources listed below and put different file types in corresponding folders according to the file structure of the repo listed above.
+
+## Step by step guide
+
+Download libraries using the instructions in [setup_venv.md](./setup_venv.md)
+
+Download netCDF files as they were too large to include in the repository.
 
 ### Running the files:
 
@@ -72,16 +78,15 @@ If you want to not only view but also run the jupyter notebooks you will need to
 3.  join_csv.ipynb file creates joined datasets, viusalizes the analysis of the distributions and transforms the set
 4.  models.ipynb training different models to see which performs the best
 
+Other python files in new approach folder contain functions and classes used to make the code work.
+
 #### Running only necessary files to create the model
+Go to new approach folder and run the files in the following order.
 
 ```
-obs_diazotr
-
 obs_env──────>fill_env──┐
                         │───>join_csv───>models
 obs_nifh─────>fill_nifh─┘
-
-obs_nifh_nc
 ```
 
 1. obs_env.ipynb & obs_nifh.ipynb
@@ -98,6 +103,7 @@ obs_nifh_nc
 - 4.0 made it possible to easily try out different models and compare results to find the best one. Predicted values for the entire set of environmental data. Comapred models and datasets in plots.
 - 5.0 after initial model training, the need for more diverse data was discovered. Added bacterial data from more sources. New versions of the exisitng datasets were tried and more visualizations added in the models file to better compare models and datasets.
 - 5.1 Further refinements of the projects code and the model as well as the visualizations. Instructions for adding new data added in [adding new data](./addinstructions.md)
+- 6.0 New approach folder added. Significanlty improved code organization and quality as well as trying to improve model performance.
 
 # Sources
 

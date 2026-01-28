@@ -61,6 +61,8 @@ def plotColsOnMap(
         if specific_depth != None:
             mask = valid_data["DEPTH (m)"]==specific_depth
             valid_data=valid_data[mask]
+        else:
+            valid_data = valid_data.groupby(by=['LATITUDE', 'LONGITUDE']).mean().reset_index()
 
         #this sets the logorithmic scale to be exactly like in the paper instead of default
         norm = None        
