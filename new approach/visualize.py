@@ -15,7 +15,8 @@ def plotColsOnMap(
         transf = (lambda x: x), 
         specific_depth=None,
         colorbar_label = "",
-        title=""
+        title="",
+        s=5
     ):
     """
     Plot specified column on a map. Latitude and longitude range should be -180 to 180 and -90 to 90.
@@ -32,6 +33,7 @@ def plotColsOnMap(
         specific_depth: specific depth to plot(default is None so all depths)
         colorbar_label: label for the colorbar
         title: title for the plot overall
+        s: dot size default is 5
 
     Returns:
         nothing
@@ -71,7 +73,7 @@ def plotColsOnMap(
             valid_data["LATITUDE"],
             c=transf(((valid_data[col])*constant)),#data is multiplied by a constant and transformed
             cmap=cmap,
-            s=5,
+            s=s,
             transform=ccrs.PlateCarree(),
             norm=norm,
             vmin=min_lim,

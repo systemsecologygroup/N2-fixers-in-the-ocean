@@ -4,7 +4,7 @@
 First we create the environment and then we switch the terminal to open it. 
 ```
 python -m venv .venv
-source .venv/bin/active
+source .venv/bin/activate
 ```
 
 Now you should see somethign like: 
@@ -24,6 +24,6 @@ In the jupyter notebook it should appear as one of the options for the kernel to
 In order to enter in terminal(if not already entered)
 
 ```
-source .venv/bin/active
+source .venv/bin/activate
 ```
 
