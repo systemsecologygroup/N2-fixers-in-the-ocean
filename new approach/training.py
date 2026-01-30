@@ -38,6 +38,9 @@ class SimpleTransformer():
         "Fe":(lambda x: np.log(x*1000+10)),
         "solar":(lambda x:x),
         "N:P":(lambda x: x),
+        "C1": (lambda x: x),
+        "C2": (lambda x: x),
+        "C3": (lambda x: x),
         'Trichodesmium nifH Gene (x106 copies m-3)':(lambda x: np.log(x*(10**6)+10)),
         'UCYN-A nifH Gene (x106 copies m-3)':(lambda x: np.log(x*(10**6)+10)),
         'UCYN-B nifH Gene (x106 copies m-3)':(lambda x: np.log(x*(10**10)+10))
@@ -51,6 +54,9 @@ class SimpleTransformer():
         "Fe":(lambda x: (np.exp(x)-10)/(10**3)),
         "solar":(lambda x:x),
         "N:P":(lambda x: x),
+        "C1": (lambda x: x),
+        "C2": (lambda x: x),
+        "C3": (lambda x: x),
         'Trichodesmium nifH Gene (x106 copies m-3)':(lambda x: (np.exp(x)-10)/(10**6)),
         'UCYN-A nifH Gene (x106 copies m-3)':(lambda x: (np.exp(x)-10)/(10**6)),
         'UCYN-B nifH Gene (x106 copies m-3)':(lambda x: (np.exp(x)-10)/(10**10))
@@ -98,6 +104,9 @@ class SecondTransformer():
         "Fe":(lambda x: np.log(x*(10**6)+10)),
         "solar":(lambda x:x),
         "N:P":(lambda x: x),
+        "C1": (lambda x: x),
+        "C2": (lambda x: x),
+        "C3": (lambda x: x),
         'Trichodesmium nifH Gene (x106 copies m-3)':(lambda x: np.log10(x*(10**8)+10)),
         'UCYN-A nifH Gene (x106 copies m-3)':(lambda x: np.log10(x*100+5)),
         'UCYN-B nifH Gene (x106 copies m-3)':(lambda x: np.log(x*(10**10)+10))
@@ -111,6 +120,9 @@ class SecondTransformer():
         "Fe":(lambda x: (np.exp(x)-10)/(10**6)),
         "solar":(lambda x:x),
         "N:P":(lambda x: x),
+        "C1": (lambda x: x),
+        "C2": (lambda x: x),
+        "C3": (lambda x: x),
         'Trichodesmium nifH Gene (x106 copies m-3)':(lambda x: (np.power(10,x)-10)/(10**8)),
         'UCYN-A nifH Gene (x106 copies m-3)':(lambda x: (np.power(10,x)-5)/100),
         'UCYN-B nifH Gene (x106 copies m-3)':(lambda x: (np.exp(x)-10)/(10**10))

@@ -63,6 +63,11 @@ def filterDepth(df, depth = 50, depth_col = "DEPTH (m)"):
     df_depth = df[df_mask]
     return df_depth
 
+def setND(dataframe, columns):
+    for col in columns:
+        mask = (dataframe[col]=="n.d.") | (dataframe[col]=="ND") |  (dataframe[col]=="nan")
+        dataframe.loc[mask, col]=0
+        
 def roundCoord(cols, df, coord_cols=["LATITUDE","LONGITUDE"]):
     """
     Round the coordinate columns and returns the resulting dataframe with coordinate and specified columns kept.
@@ -80,7 +85,7 @@ def roundCoord(cols, df, coord_cols=["LATITUDE","LONGITUDE"]):
         if col not in df:
             raise KeyError("column {0} is not found in dataframe".format(col))
         
-    #we separate the data and coordinates in order to round the coordinate grid
+    # we separate the data and coordinates in order to round the coordinate grid
     coordinates = []
     for col in coord_cols:
         coordinates.append(np.round(df[col]).astype(int))
@@ -88,6 +93,42 @@ def roundCoord(cols, df, coord_cols=["LATITUDE","LONGITUDE"]):
     coord_data = pd.concat(coordinates, axis=1)
     data = df[cols]
 
-    #we join the data back together
+    # we join the data back together
     df_rnd = pd.concat([coord_data, data], axis=1)
     return df_rnd
+
+def constructFeatures(dataframe):
+    """
+    The dataframe is modified to include N:P ratio and modified coordinates as inputs to the model.
+
+    The coordinates transformation is based on the formula provided in Tang et all.
+    
+    :param dataframe: a pandas dataframe with lat, long and depth columns as well as N,P 
+    """
+    #columns presence is checked to avoid key errors
+
+    # firstly N:P ratio is added
+    if "N" in dataframe.columns and "P" in dataframe.columns:
+        dataframe["N:P"]=dataframe["N"]/dataframe["P"]
+    else:
+        print("ERROR:3 one of the columns: N,P is not found")
+
+    # then a coordinate transform is performed
+    if "LATITUDE" in dataframe.columns and "LONGITUDE" in dataframe.columns:
+        # this calculation is present in all steps. So, I made it a variable
+        latp = dataframe["LATITUDE"]*(np.pi/180.0)
+        longp = dataframe["LONGITUDE"]*(np.pi/180.0)
+
+        # final column computations
+        C1 = np.sin(latp)
+        C2 = np.sin(longp)*np.cos(latp)
+        C3 = -np.cos(longp)*np.cos(latp)
+
+        # assigning values
+        dataframe["C1"]=C1
+        dataframe["C2"]=C2
+        dataframe["C3"]=C3
+    else:
+        print("ERROR:3 one of the columns: LATITUDE,LONGITUDE is not found")
+
+    
