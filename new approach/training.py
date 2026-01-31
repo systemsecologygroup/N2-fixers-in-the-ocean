@@ -252,7 +252,7 @@ def getData(
     cleared = dataset.dropna(subset=(feature+x_columns))[x_columns+y_columns]
     # To check reuslts I print the NaN count
     imp_cols = feature+x_columns
-    print("after getting data NaN count is: {0}".format(cleared[imp_cols].isnull().sum().sum()))
+    print("after getting data NaN count is: {0} for feature: {1}".format(cleared[imp_cols].isnull().sum().sum(), feature))
     return cleared
 
 from sklearn.metrics import root_mean_squared_error
