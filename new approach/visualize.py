@@ -149,3 +149,35 @@ def plotCorMatr(cols, df, cmap="vlag"):
     plt.show()
 
     return mtrx
+
+def errorScorePlot(scores, error_fun, y_axis, title, color, y_columns):
+    fig, axes = plt.subplots(nrows=3, ncols=1, figsize=(10, 20))
+    axes = axes.flatten()
+
+    for i, feature in enumerate(y_columns):
+        #simplify notation
+        ax=axes[i]
+        
+        ##we plot a single feature
+        subset = scores[scores['feature'] == feature]
+
+        #the barplot is made
+        sns.barplot(
+            data=subset,
+            x='dataset name',
+            y=error_fun,
+            hue='model',
+            palette=color,
+            ax=ax
+        )
+
+        ax.set_title('Comparison of models and scalers on feature: {0}'.format(feature))
+        ax.set_ylabel(y_axis)
+
+        ax.tick_params(axis='x', rotation=45)
+        ax.legend(title='Model')
+
+    plt.tight_layout()
+    fig.suptitle(title,fontsize=16)
+    fig.subplots_adjust(top=0.95)
+    plt.show()
