@@ -65,8 +65,8 @@ def filterDepth(df, depth = 50, depth_col = "DEPTH (m)"):
 
 def setND(dataframe, columns):
     for col in columns:
-        mask = (dataframe[col]=="n.d.") | (dataframe[col]=="ND") |  (dataframe[col]=="nan")
-        dataframe.loc[mask, col]=0
+        mask = (dataframe[col]=="n.d.") | (dataframe[col]=="ND") |  (dataframe[col]=="nan") | (dataframe[col]=="dnq")  | (dataframe[col]=="bd")
+        dataframe.loc[mask, col]=0#TODO try assignign 10^-10 and add some noise
         
 def roundCoord(cols, df, coord_cols=["LATITUDE","LONGITUDE"]):
     """
