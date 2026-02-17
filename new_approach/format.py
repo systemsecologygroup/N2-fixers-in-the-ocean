@@ -64,9 +64,15 @@ def filterDepth(df, depth = 50, depth_col = "DEPTH (m)"):
     return df_depth
 
 def setND(dataframe, columns):
+    #range for the random function
+    low = 10.0**(-2)
+    high = 10.0**(-6)
+
+    print("Imputing ND values with uniform random distribution between {0} and {1}".format(low, high))
+
     for col in columns:
         mask = (dataframe[col]=="n.d.") | (dataframe[col]=="ND") |  (dataframe[col]=="nan") | (dataframe[col]=="dnq")  | (dataframe[col]=="bd")
-        dataframe.loc[mask, col]=0#TODO try assignign 10^-10 and add some noise
+        dataframe.loc[mask, col]=np.random.uniform(low, high, size=mask.sum())#used to be just 0
         
 def roundCoord(cols, df, coord_cols=["LATITUDE","LONGITUDE"]):
     """
