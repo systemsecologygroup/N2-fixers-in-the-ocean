@@ -6,7 +6,9 @@ This file stores the scalers, transformers used for training the models and func
 
 import pandas as pd
 import numpy as np
+import joblib as joblib
 
+from var import x_canon, y_canon
 
 """
 ===================================================================================================
@@ -316,3 +318,107 @@ class DummyModel():
 
     def predict(self, X_train):
         return np.full(len(X_train), self.value)
+    
+"""
+===================================================================================================
+TRANSFORMERS for multiple datasets
+===================================================================================================
+"""
+transformers = joblib.load("../model/transformers")#transformers as stored in a file
+
+def transofrm_back(name,df):
+    ''' 
+    transform the dataset back to original scale
+
+    Args:
+        name: name of the dataset type used
+        df: dataframe
+
+    Returns:
+        a modified dataset with the same number and names of columns but in og scale
+    '''
+    #saved for laters
+    actual_cols = df.columns
+    #in case the columns that are used do not consitute the full available set
+    cols_canon = set(x_canon+y_canon)
+
+    #the diffrerence is the missing columsn that we need to add to make it work
+    #this is due to the transformers from scikit learn requiring the same set of columns regardless of 
+    #what is happening
+    cols_dif = cols_canon - set(actual_cols)
+    N = df.shape[0]
+
+    #columns are added
+    for col in cols_dif:
+        df[col]=np.ones(N)
+
+    #both naming and order are important so the order is maintained here
+    df = df[x_canon+y_canon]
+
+    #now we actually transform the data
+    if "simple" in name:
+        #print("using a simple tr")
+        return SimpleTransformer().inverse_transform(df)[actual_cols]
+    elif "second" in name:
+        if "scaled" in name:
+            df = pd.DataFrame(transformers["second_transform_scaler"].inverse_transform(df), columns=df.columns)
+        return SecondTransformer().inverse_transform(df)[actual_cols]
+    elif "power" in name:
+        #print("power branch is called")
+        transfored_arr = transformers["power_transf"].inverse_transform(df)
+    elif "quantile" in name:
+        #print("quantile branch is called")
+        transfored_arr = transformers["quantile_transf"].inverse_transform(df)
+    else:
+        #print("raw branch")
+        return df[actual_cols]
+    
+    return pd.DataFrame(transfored_arr, columns=df.columns)[actual_cols]
+
+
+def transofrm_forward(name,df):
+    ''' 
+    transform the dataset to a specific scale
+    Args:
+        name: name of the dataset type used
+        df: dataframe
+
+    Returns:
+        a modified dataset with the same number and names of columns but in og scale
+    '''
+    #saved for laters
+    actual_cols = df.columns
+    #in case the columns that are used do not consitute the full available set
+    cols_canon = set(x_canon+y_canon)
+
+    #the diffrerence is the missing columsn that we need to add to make it work
+    #this is due to the transformers from scikit learn requiring the same set of columns regardless of 
+    #what is happening
+    cols_dif = cols_canon - set(actual_cols)
+    N = df.shape[0]
+
+    #columns are added
+    for col in cols_dif:
+        df[col]=np.ones(N)
+
+    #both naming and order are important so the order is maintained here
+    df = df[x_canon+y_canon]
+
+    #now we actually transform the data
+    if "simple" in name:
+        return SimpleTransformer().transform(df)[actual_cols]
+    elif "second" in name:
+        second = SecondTransformer().transform(df)
+        if "scaled" in name:
+            df = pd.DataFrame(transformers["second_transform_scaler"].transform(second), columns=df.columns)
+            return df[actual_cols]
+        else:
+            return second[actual_cols]
+    elif "power" in name:
+        transfored_arr = transformers["power_transf"].transform(df)
+    elif "quantile" in name:
+        transfored_arr = transformers["quantile_transf"].transform(df)
+    else:
+        return df[actual_cols]
+    
+    return pd.DataFrame(transfored_arr, columns=df.columns)[actual_cols]
