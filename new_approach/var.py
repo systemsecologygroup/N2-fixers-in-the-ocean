@@ -10,6 +10,10 @@ easier to adjust and change in the future.
 '''
 TRAINING:
 
+In order to apply changes to the set of features used for trainign the list can be edited to be the subset of the full set.
+
+This might be useful to see the effects of different variables on the overall output and predictions made.
+
 - geo_range: range of latitudes from where the data for training is used
 - x_columns: range of columns to be trained on
 - y_columns: predicted values for the model

@@ -16,7 +16,6 @@ It should be noted that some of these libraries themselves have dependencies tha
 - numpy
 - pandas
 - xarray
-(also a net cdf package should be present in the system for instance netCDF4)
 - cartopy
 - matplotlib
 - sklearn
@@ -61,13 +60,13 @@ In the main repository folder all jupyter notebook files are contained alongside
 
 # Set up
 
-If you want to not only view but also run the jupyter notebooks you will need to make sure that all libraries listed above are installed. Then download all the datasets used for the project from the sources listed below and put different file types in corresponding folders according to the file structure of the repo listed above.
+If you want to not only view but also run the jupyter notebooks you will need to make sure that all libraries listed above are installed. Then download all the datasets used for the project from the sources listed below and put different file types in corresponding folders according to the file structure of the repo listed above. The dataset that mainly needs to be downloaded is Iron data. 
 
 ## Step by step guide
 
 Download libraries using the instructions in [setup_venv.md](./setup_venv.md)
 
-Download netCDF files as they were too large to include in the repository.
+Download netCDF files as they were too large to include in the repository. 
 
 ### Running the files:
 
