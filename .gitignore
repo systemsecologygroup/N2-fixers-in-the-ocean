@@ -7,4 +7,4 @@ csv/filled/*.csv
 #this if for the python virtual environment
 .venv
 */__pycache__/*
-*/predictions/*
+*/predictions/*.csv
