@@ -16,9 +16,88 @@ Here I applied different transformations for each column, this allows for maximu
 customization and tuning and also to easily revert back the changes afterwards.
 ===================================================================================================
 """
-class SimpleTransformer():
+class MathTransformer():
     '''
-    Simple transformer class used for training the model. Applies mathematical functions to transform the dataset.
+    Math transformer class used for training the model. Applies mathematical functions to transform the dataset. This
+    class is meant to be inherited from and with attributes override. By default no transform is applied.
+
+    Attributes:
+        transforms: dictionary of transform functions for each column
+        inverse_transforms: dictionary of inverse transform functions
+
+    Methods: 
+        transform: transform the data and return the resulting df
+        inverse_transform: reverse the transformation
+
+    '''
+
+    transforms = {
+        "O2":(lambda x: x),
+        "T":(lambda x: x),
+        "N":(lambda x: x),
+        "P":(lambda x: x),
+        "Fe":(lambda x: x),
+        "solar":(lambda x:x),
+        "N:P":(lambda x: x),
+        "C1": (lambda x: x),
+        "C2": (lambda x: x),
+        "C3": (lambda x: x),
+        'Trichodesmium nifH Gene (x106 copies m-3)':(lambda x: x),
+        'UCYN-A nifH Gene (x106 copies m-3)':(lambda x: x),
+        'UCYN-B nifH Gene (x106 copies m-3)':(lambda x: x)
+    }
+
+    inverse_transforms = {
+        "O2":(lambda x: x),
+        "T":(lambda x: x),
+        "N":(lambda x: x),
+        "P":(lambda x: x),
+        "Fe":(lambda x: x),
+        "solar":(lambda x:x),
+        "N:P":(lambda x: x),
+        "C1": (lambda x: x),
+        "C2": (lambda x: x),
+        "C3": (lambda x: x),
+        'Trichodesmium nifH Gene (x106 copies m-3)':(lambda x: x),
+        'UCYN-A nifH Gene (x106 copies m-3)':(lambda x: x),
+        'UCYN-B nifH Gene (x106 copies m-3)':(lambda x: x)
+    }
+    def __init__(self):
+        '''
+        Constructor method
+        '''
+        print("Simple transformer initiated")
+
+    
+    def __applyTransormations(self, dct,df):
+        ''' 
+        apply transformations to a set of columns based on a dictionary of the format:
+        col_name --> lambda function on a numpy array
+        '''
+        new_df = pd.DataFrame()
+        for key in dct.keys():
+            if key in df.columns:
+                new_df[key] = dct[key](df[key])
+        return new_df
+    
+    def transform(self,df):
+        ''' 
+        forward transofrm before training
+        '''
+        return self.__applyTransormations(self.transforms, df)
+
+    def inverse_transform(self,df):
+        ''' 
+        backward transform for the model results
+        '''
+        return self.__applyTransormations(self.inverse_transforms, df)
+    
+
+
+class SimpleTransformer(MathTransformer):
+    '''
+    Simple transformer class used for training the model. Applies mathematical functions to transform the dataset. 
+    Mainly log10 is applied with constant added to make sure values are non negative. 
 
     Attributes:
         transforms: dictionary of transform functions for each column
@@ -61,36 +140,10 @@ class SimpleTransformer():
         'UCYN-A nifH Gene (x106 copies m-3)':(lambda x: (np.exp(x)-10)/(10**6)),
         'UCYN-B nifH Gene (x106 copies m-3)':(lambda x: (np.exp(x)-10)/(10**10))
     }
-
-    def __init__(self):
-        print("Simple transformer initiated")
-
-    ''' 
-    apply transformations to a set of columns based on a dictionary of the format:
-    col_name --> lambda function on a numpy array
-    '''
-    def __applyTransormations(self, dct,df):
-        new_df = pd.DataFrame()
-        for key in dct.keys():
-            if key in df.columns:
-                new_df[key] = dct[key](df[key])
-        return new_df
     
-    ''' 
-    forward transofrm before training
+class SecondTransformer(MathTransformer):
     '''
-    def transform(self,df):
-        return self.__applyTransormations(self.transforms, df)
-
-    ''' 
-    backward transform for the model results
-    '''
-    def inverse_transform(self,df):
-        return self.__applyTransormations(self.inverse_transforms, df)
-    
-class SecondTransformer():
-    '''
-    Second transformer calls
+    Second transformer calls with adjusted functions.
 
      Attributes:
         transforms: dictionary of transform functions for each column
@@ -127,32 +180,6 @@ class SecondTransformer():
         'UCYN-A nifH Gene (x106 copies m-3)':(lambda x: (np.power(10,x)-5)/100),
         'UCYN-B nifH Gene (x106 copies m-3)':(lambda x: (np.exp(x)-10)/(10**10))
     }
-
-    def __init__(self):
-        print("Second transformer initiated")
-
-    ''' 
-    apply transformations to a set of columns based on a dictionary of the format:
-    col_name --> lambda function on a numpy array
-    '''
-    def __applyTransormations(self, dct,df):
-        new_df = pd.DataFrame()
-        for key in dct.keys():
-            if key in df.columns:
-                new_df[key] = dct[key](df[key])
-        return new_df
-    
-    ''' 
-    forward transofrm before training
-    '''
-    def transform(self,df):
-        return self.__applyTransormations(self.transforms, df)
-
-    ''' 
-    backward transform for the model results
-    '''
-    def inverse_transform(self,df):
-        return self.__applyTransormations(self.inverse_transforms, df)
     
 """
 ===================================================================================================
