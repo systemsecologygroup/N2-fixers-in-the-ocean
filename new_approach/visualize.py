@@ -1,9 +1,14 @@
 import matplotlib
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import cartopy.crs as ccrs
 import cartopy.feature as cfeature
 import seaborn as sns
 import pandas as pd
+import numpy as np
+
+from var import cordinates_cols
+
 
 def plotColsOnMap(
         cols,
@@ -18,7 +23,8 @@ def plotColsOnMap(
         specific_depth=None,
         colorbar_label = "",
         title="",
-        s=5
+        s=5,
+        color_steps=None,
     ):
     """
     Plot specified column on a map. Latitude and longitude range should be -180 to 180 and -90 to 90.
@@ -37,12 +43,15 @@ def plotColsOnMap(
         colorbar_label: label for the colorbar
         title: title for the plot overall
         s: dot size default is 5
+        color_steps: defualt = None, how many steps should the plot colorbar have?
 
     Returns:
         nothing
 
     """
     isOverlay = isinstance(overlay, pd.DataFrame)
+    max_lim_plot=max_lim
+    min_lim_plot=min_lim
 
     #the index is reset from using lat and lon just in case
     df_reset = df.reset_index()
@@ -58,11 +67,13 @@ def plotColsOnMap(
     for i, col in enumerate(cols):
         ax = axes[i]#subplot
 
+        #COASTLINE GENERATION
         #we want to see the coastlines on the globe and only take not null values
         ax.add_feature(cfeature.COASTLINE)
         valid_data = df_reset[df_reset[col].notna()]
         valid_overlay = dfo_reset[dfo_reset[col].notna()] if isOverlay else None
 
+        #DEPTH, REDUCTION TO 3D->2D
         #the depth when specified limits the depth visualized to a specifc depth
         if specific_depth != None:
             #base layer containing most data
@@ -79,37 +90,70 @@ def plotColsOnMap(
             if (isOverlay):
                 valid_overlay=valid_overlay.groupby(by=['LATITUDE', 'LONGITUDE']).mean().reset_index()
 
+        #LOG RANGE LIKE THE PAPER
         #this sets the logorithmic scale to be exactly like in the paper instead of default
         norm = None        
         if log_range:
             norm = matplotlib.colors.LogNorm(vmin=1e3, vmax=1e11)
 
+        # PLOTTING DATA
+        plotted_data=transf(((valid_data[col])*constant))
+
+        #STEPPED COLOR BAR
+        #the color steps mean that we need to specify the max 
+        if color_steps != None:
+            data_cols = list(set(valid_data.columns)-set(cordinates_cols))
+
+            #set the limit for the colorbar
+            color_max=None
+            if max_lim==None:
+                color_max=plotted_data.max()
+            else:
+                color_max=max_lim
+                max_lim_plot=None
+
+            #set the min limit
+            color_min=None
+            if min_lim==None:
+                color_min=plotted_data.min()
+            else:
+                color_min=min_lim
+                min_lim_plot=None
+
+            #now we can create a boundary between them
+            bounds = np.linspace(start=color_min, stop=color_max, endpoint=True, num=color_steps+1)
+            norm=mpl.colors.BoundaryNorm(bounds, plt.get_cmap(cmap).N)
+            
+        #MAIN SCATTER PLOT
         #scatter plot is created
         sc = ax.scatter(
             valid_data["LONGITUDE"],
             valid_data["LATITUDE"],
-            c=transf(((valid_data[col])*constant)),#data is multiplied by a constant and transformed
+            c=plotted_data,#data is multiplied by a constant and transformed
             cmap=cmap,
             s=s,
             transform=ccrs.PlateCarree(),
             norm=norm,
-            vmin=min_lim,
-            vmax=max_lim,
+            vmin=min_lim_plot,
+            vmax=max_lim_plot,
             zorder=1
         )
 
+        #OVERLAY PLOT IF NEEDED
         if (isOverlay):
             sc_over = ax.scatter(
                 valid_overlay["LONGITUDE"],
                 valid_overlay["LATITUDE"],
                 c=transf(((valid_overlay[col])*constant)),#data is multiplied by a constant and transformed
                 cmap=cmap,
-                s=3*s,
+                s=4*s,
                 transform=ccrs.PlateCarree(),
                 norm=norm,
-                vmin=min_lim,
-                vmax=max_lim,
-                zorder=2
+                vmin=min_lim_plot,
+                vmax=max_lim_plot,
+                zorder=2,
+                edgecolors="black",
+                linewidth=0.5
             )
 
         #we want to see the entire globe and not just the values 
