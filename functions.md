@@ -18,6 +18,8 @@ at [format.py](./new_approach/format.py)
 |setND               | set no data values in the dataframe to a random value close to 0 |
 |roundCoord          | round a list of coordinate columns to integer values   |
 |constructFeatures   | create C1,C2,C3 features based on lat and long cols    |
+|||
+|prePrNifh           | use functions from above to preprocess the data        |
 
 ## training.py
 

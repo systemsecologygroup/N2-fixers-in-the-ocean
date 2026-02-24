@@ -1,6 +1,15 @@
 import pandas as pd
 import numpy as np
 
+from var import cordinates_cols, y_columns
+
+"""
+===================================================================================================
+PRE PROCESSING BASIC FUNCTIONS
+
+These functions are used to format the dataset to a common form and exclude unnecessary data.
+===================================================================================================
+"""
 def removeEmptyRows(cols, df):
     """
 
@@ -63,7 +72,7 @@ def filterDepth(df, depth = 50, depth_col = "DEPTH (m)"):
     df_depth = df[df_mask]
     return df_depth
 
-def setND(dataframe, columns):
+def setND(dataframe, columns, random=True):
     #range for the random function
     low = 10.0**(-2)
     high = 10.0**(-6)
@@ -72,7 +81,10 @@ def setND(dataframe, columns):
 
     for col in columns:
         mask = (dataframe[col]=="n.d.") | (dataframe[col]=="ND") |  (dataframe[col]=="nan") | (dataframe[col]=="dnq")  | (dataframe[col]=="bd")
-        dataframe.loc[mask, col]=np.random.uniform(low, high, size=mask.sum())#used to be just 0
+        if (random):
+            dataframe.loc[mask, col]=np.random.uniform(low, high, size=mask.sum())#used to be just 0
+        else:
+            dataframe.loc[mask, col]=-100
         
 def roundCoord(cols, df, coord_cols=["LATITUDE","LONGITUDE"]):
     """
@@ -103,6 +115,46 @@ def roundCoord(cols, df, coord_cols=["LATITUDE","LONGITUDE"]):
     df_rnd = pd.concat([coord_data, data], axis=1)
     return df_rnd
 
+"""
+===================================================================================================
+NIFH DATA PREPROCESSING PIPELINE
+
+This function combines the functions above for a single consistent way to transform the dataset
+into a new format.
+===================================================================================================
+"""
+
+def prePrNifh(df, cord=cordinates_cols, y_col=y_columns, random=True):
+    """
+    Preprocess a given nifh dataset so it matches the format expected. 
+
+    Args:
+        df: dataframe with the data
+        cord: coordinate columns that will be rounded
+        y_col: data columns not to round
+        random: should the ND points be set as a random value or not
+    Returns:
+        a processed dataframe with numercial columns and rounded coordinates
+    """
+
+    new_df = df.copy()#data is copied to avoid overwriting the og
+    setND(new_df, y_col, random=random)#replace ND with a special value or random
+
+    #I removed all redundant columns and made everything into a number
+    removeRed(y_col+cord, new_df)
+    objToNum(new_df)
+
+    #if empty rows are created they should be removed
+    new_df = removeEmptyRows(y_col,new_df)
+
+    #coordinates are rounded
+    return roundCoord(cols=y_col, df=new_df, coord_cols=cord)
+
+"""
+===================================================================================================
+FEATURE ENGINEERING C1,C2,C3
+===================================================================================================
+"""
 def constructFeatures(dataframe):
     """
     The dataframe is modified to include N:P ratio and modified coordinates as inputs to the model.
