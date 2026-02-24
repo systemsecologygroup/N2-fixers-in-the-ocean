@@ -185,7 +185,7 @@ class SecondTransformer(MathTransformer):
     
 """
 ===================================================================================================
-Outlier removal functions used in join_csv.ipynb
+Outlier removal functions used in join_csv.ipynb NO LONGER USED
 ===================================================================================================
 """
 #these 2 values are needed to find outliers within a given column
