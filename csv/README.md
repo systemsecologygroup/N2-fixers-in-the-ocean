@@ -8,3 +8,5 @@ This folder contains all csv files used and produced when running the code. Subf
 - nifh: raw nifh data from the source
 - nifh_di: raw nifh data depth integrated
 - predictions: final predictions based on the data. 
+
+Initially most of these folders except for a readme file. This means that the csv files they store are results of executing the code. 
