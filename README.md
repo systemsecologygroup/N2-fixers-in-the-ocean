@@ -35,7 +35,16 @@ In the main repository folder doc files are contained alongside _.gitignore_ and
 
 The source files are currently in the new_approach directory. I plan to rename it to src.
 
-### Python files
+## Doc files
+These file inform on repo structure and inner workings. They cover custom functions, classes, global variables and set up for running the code. Also, they discuss how to add more data and what was achieved during the internship.
+
+- [functions.md](./functions.md)
+- [setup_venv.md](./setup_venv.md)
+- [README.md](./README.md)
+- [addinstructions.md](./addinstructions.md)
+- [internship_report.pdf](./internship_report.pdf)
+
+## Python files
 
 Notebooks:
 - obs\_\*.ipynb: data cleaning code, formating the data into desired format before further analysis and transformations.
@@ -50,6 +59,13 @@ Other:
 - training.py: functions and classes used for training
 - visualize.py: functions for visualizations
 - var.py: common variables used in files
+
+## Other files
+- .gitignore: files to not include in version control like intermediate outputs
+- libraries.txt: list of libraries used for set up of the venv
+
+
+## Tree structure of the repo
 
 Tree structure below was obtained by running the command below in the main folder of the repo
 ```
@@ -110,9 +126,9 @@ If you want to not only view but also run the jupyter notebooks you will need to
 
 Download libraries using the instructions in [setup_venv.md](./setup_venv.md)
 
-### Running the files:
+# Running the files:
 
-#### Running all files:
+## Running all files:
 
 1.  obs\_\*.ipynb files should be ran in any order
 2.  fill\_\*.ipynb files should be executed to fill the missing values in the created datasets, adding columns
