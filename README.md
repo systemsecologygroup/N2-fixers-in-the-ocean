@@ -4,6 +4,8 @@
 
 This repository was created for 2025 Summer internship at the Systems Ecology Group of the Leibniz Centre for Tropical Marine Research in exploration of predicting the biogeograpgy of different types of nitrogen fixers using environmental data using and by means of machine learning.
 
+The project was further developed and extended during a working student contract in December 2025 - March 2026.
+
 # Requirements
 
 - Python
@@ -27,46 +29,86 @@ You can find the installation guide for the virtual python environment under [se
 
 # File structure
 
-All csv files should be stored in the _csv_ folder, and all net CDF files should be put into a _nc_ folder. The exact names of the files can be found in each jupyter notebook. Usually it is the name of the exel file + specific use case.
+All csv files should be stored in the _csv_ folder, and all net CDF files should be put into a _nc_ folder. The exact names of the files can be found in each jupyter notebook. Usually it is the name of the exel file + specific use case. The ones needed to execute the code are already there.
 
-In the main repository folder all jupyter notebook files are contained alongside _.gitignore_ and _README.md_ file. The ignore file makes sure that no dataset files are pushed into the repo as they take a lot of space and no version control is needed for them as the source files are not modifed.
+In the main repository folder doc files are contained alongside _.gitignore_ and _README.md_ file. The ignore file makes sure that no dataset files are pushed into the repo as they take a lot of space and no version control is needed for them as the source files are not modifed.
+
+The source files are currently in the new_approach directory. I plan to rename it to src.
 
 ### Python files
 
-- obs\_\*.ipynb - contains data cleaning code, formating the data into desired format before further analysis and transformations.
+Notebooks:
+- obs\_\*.ipynb: data cleaning code, formating the data into desired format before further analysis and transformations.
+- fill_env.ipynb: extrapolating to missing points
+- models.ipynb: comparing different models and datasets
+- predict.ipynb: predict final data on a given dataset
+- visualizations.ipynb: visualizations that complement other files
+
+Other:
+- format.py: preprocessing and feature engineering functions
+- parula_diy.py: parula colormap as copied from stack overflow
+- training.py: functions and classes used for training
+- visualize.py: functions for visualizations
+- var.py: common variables used in files
+
+Tree structure below was obtained by running the command below in the main folder of the repo
+```
+tree -L 2 --gitignore --dirsfirst
+```
 
 ```
 .
-├── addinstructions.md
 ├── csv
-│   ├── datasets
-│   ├── features
-│   ├── filled
-│   └── *.csv
-├── fill_env.ipynb
-├── fill_nifh.ipynb
-├── join_csv.ipynb
+│   ├── datasets
+│   ├── features
+│   ├── filled
+│   ├── nifh
+│   ├── nifh_di
+│   ├── predictions
+│   ├── README.md
+│   ├── woa23_all_n00mn01.csv
+│   ├── woa23_all_o00mn01.csv
+│   ├── woa23_all_p00mn01.csv
+│   └── woa23_decav_t00mn01.csv
 ├── model
-│   └── imputer_knn
+│   ├── imputer_knn
+│   └── transformers
 ├── nc
-│   ├── Fe
-│   └── *.nc
-├── obs_diazotr.ipynb
-├── obs_env.ipynb
-├── obs_nifh.ipynb
-├── obs_nifh_nc.ipynb
-└── README.md
+│   ├── Fe
+│   ├── otpn
+│   ├── radiation
+│   └── README.md
+├── new_approach
+│   ├── fill_env.ipynb
+│   ├── format.py
+│   ├── join_csv.ipynb
+│   ├── models.ipynb
+│   ├── obs_env.ipynb
+│   ├── obs_nifh.ipynb
+│   ├── parula_diy.py
+│   ├── predict.ipynb
+│   ├── training.py
+│   ├── var.py
+│   ├── visualizations.ipynb
+│   └── visualize.py
+├── addinstructions.md
+├── functions.md
+├── internship_report.pdf
+├── libraries.txt
+├── README.md
+└── setup_venv.md
+
+16 directories, 26 files
+
 ```
 
 # Set up
 
-If you want to not only view but also run the jupyter notebooks you will need to make sure that all libraries listed above are installed. Then download all the datasets used for the project from the sources listed below and put different file types in corresponding folders according to the file structure of the repo listed above. The dataset that mainly needs to be downloaded is Iron data. 
+If you want to not only view but also run the jupyter notebooks you will need to make sure that all libraries listed above are installed. 
 
 ## Step by step guide
 
 Download libraries using the instructions in [setup_venv.md](./setup_venv.md)
-
-Download netCDF files as they were too large to include in the repository. 
 
 ### Running the files:
 
@@ -79,9 +121,6 @@ Download netCDF files as they were too large to include in the repository.
 5.  predict.ipynb predict the results on the inputs and plot them on the map
 
 Other python files in new approach folder contain functions and classes used to make the code work.
-
-#### Running only necessary files to create the model
-Go to new approach folder and run the files in the following order.
 
 ```
                   
