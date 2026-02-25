@@ -77,15 +77,18 @@ def setND(dataframe, columns, random=True):
     low = 10.0**(-2)
     high = 10.0**(-6)
 
+    #if it is not a random value we need to indicate that this is ND. So value out of likely range is choden
+    new_nd = -1000
+
     print("Imputing ND values with uniform random distribution between {0} and {1}".format(low, high))
 
     for col in columns:
-        mask = (dataframe[col]=="n.d.") | (dataframe[col]=="ND") |  (dataframe[col]=="nan") | (dataframe[col]=="dnq")  | (dataframe[col]=="bd")
+        mask = (dataframe[col]=="n.d.") | (dataframe[col]=="ND") |  (dataframe[col]=="nan") | (dataframe[col]=="dnq")  | (dataframe[col]=="bd") | (dataframe[col]==new_nd)
         if (random):
             dataframe.loc[mask, col]=np.random.uniform(low, high, size=mask.sum())#used to be just 0
         else:
-            dataframe.loc[mask, col]=-100
-        
+            dataframe.loc[mask, col]=new_nd
+      
 def roundCoord(cols, df, coord_cols=["LATITUDE","LONGITUDE"]):
     """
     Round the coordinate columns and returns the resulting dataframe with coordinate and specified columns kept.
