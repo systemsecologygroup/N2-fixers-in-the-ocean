@@ -80,6 +80,7 @@ tree -L 2 --gitignore --dirsfirst
 │   ├── filled
 │   ├── nifh
 │   ├── nifh_di
+│   ├── otpn
 │   ├── predictions
 │   ├── README.md
 │   ├── woa23_all_n00mn01.csv
@@ -94,7 +95,7 @@ tree -L 2 --gitignore --dirsfirst
 │   ├── otpn
 │   ├── radiation
 │   └── README.md
-├── new_approach
+├── src
 │   ├── fill_env.ipynb
 │   ├── format.py
 │   ├── join_csv.ipynb
@@ -108,13 +109,14 @@ tree -L 2 --gitignore --dirsfirst
 │   ├── visualizations.ipynb
 │   └── visualize.py
 ├── addinstructions.md
+├── code_overview.md
 ├── functions.md
 ├── internship_report.pdf
 ├── libraries.txt
 ├── README.md
 └── setup_venv.md
 
-16 directories, 26 files
+16 directories, 27 files
 
 ```
 
@@ -163,7 +165,7 @@ Other python files in new approach folder contain functions and classes used to 
 # Version history
 
 - 0.1 creation of the repo and the README file
-- 1.0 refinements to README, analysis of environmental data in [obs_env.ipynb](./obs_env.ipynb) and .gitignore file added. Also, made an overview the the data for bacteria that we aim to later predict.
+- 1.0 refinements to README, analysis of environmental data in [obs_env.ipynb](./src/obs_env.ipynb) and .gitignore file added. Also, made an overview the the data for bacteria that we aim to later predict.
 - 2.0 Joining environmental and bacteria data into a single file. Filling in missing values. Averaged the data in bacterial nifh gene dataset for the same coordinate point. Started conducting exploritory data analysis to make better model performance more likely and possible.
 - 3.0 solar data added to model features. Fruther refinements to the data analysis and transformation. Initial model training attempts.
 - 4.0 made it possible to easily try out different models and compare results to find the best one. Predicted values for the entire set of environmental data. Comapred models and datasets in plots.

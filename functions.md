@@ -7,7 +7,7 @@ details go to corresponding file and read the comments there.
 
 This file contains functions used in the preprocessing step of the project.
 Where data is formatted and joined together. File with the source can be found
-at [format.py](./new_approach/format.py)
+at [format.py](./src/format.py)
 
 | Function           | Use cases                                              |
 |--------------------|--------------------------------------------------------|
@@ -23,7 +23,7 @@ at [format.py](./new_approach/format.py)
 
 ## training.py
 
-[training.py](./new_approach/training.py) here you can find the source of the functions.
+[training.py](./src/training.py) here you can find the source of the functions.
 
 This file contains both functions and classes used during training. Most of them 
 apply different transformations in order to achieve better results during training.
@@ -59,7 +59,7 @@ actually performs better than just predicting the average.
 
 ## visualize.ppy
 
-[visualize.py](./new_approach/visualize.py/) source file.
+[visualize.py](./src/visualize.py/) source file.
 
 Since most plots repeat and are similar common functions to create them are grouped into this file. 
 

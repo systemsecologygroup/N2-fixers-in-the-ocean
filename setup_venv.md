@@ -1,7 +1,8 @@
 # Instructions for setting up the virtual python environment
 
 ## Starting from scarctch
-First we create the environment and then we switch the terminal to open it. 
+First we create the environment and then we switch the terminal to open it. If have issues with version compatibility, try using an older Python version like 3.12 instead of 3.14 as some libraries might not support the most recetn release yet. 
+ 
 ```
 python -m venv .venv
 source .venv/bin/activate
