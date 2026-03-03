@@ -40,6 +40,7 @@ These file inform on repo structure and inner workings. They cover custom functi
 
 - [functions.md](./functions.md)
 - [setup_venv.md](./setup_venv.md)
+- [code_overview.md](./code_overview.md)
 - [README.md](./README.md)
 - [addinstructions.md](./addinstructions.md)
 - [internship_report.pdf](./internship_report.pdf)
