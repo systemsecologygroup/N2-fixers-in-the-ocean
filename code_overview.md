@@ -241,6 +241,38 @@ All transformers from this file are saved using joblib
 
 # MODELS
 
+This file compares differnet models and datasets. This allows to pick the best combination in terms of accuracy on test data and thus get the best predictions.
+
+Firstly, some custom functions are defined:
+
+*score_model* as the name suggests allows us to get an error score on the original scale for a given model and dataset.
+
+*score_model_no_transf* allows to score model on transformed scales.
+
+*paths* defines the names and paths to for all datasets in the file. 
+
+Then histograms show how the data is distributed. 
+
+*try_model_on_all* trains a given model on all datasets, computes error scores and saved them to a pandas dataframe. 
+
+Train test split with data defined in *paths* is performed. Here we pick only rows where a specific feature is present using *getData*, creating 3 datasets from each file 1 for each feature. Also, the new data is checked for nulls as this can interfear with training.
+
+## Training
+Then in each following cell a model and its name are specifed and *try_model_on_all* is called. 
+
+## Visualization
+After trying all necessary models the results are plotted for different error scores. The one I pay attention to the most as i find it descrived the situatuon the best it RMSLE as it works best for such ranges unlike R2 or RMSE.
+
+## Linear regression analysis
+This sectiosn trains a linear regression on a selected dataset and then plots the coefficient that can show how related to the final result different inputs are. 
+
+## Conclusions
+Explain the final verdict based on file contents and what model, dataset should be used and why.
+
+## Tuning
+
+This sections tried different parameters on the best model, set pair to find lowest error rate.
+
 # PREDICT
 
 # SUMMARY

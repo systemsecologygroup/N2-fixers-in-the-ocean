@@ -59,7 +59,7 @@ actually performs better than just predicting the average.
 
 ## visualize.ppy
 
-[visualize.py](./src/visualize.py/) source file.
+[visualize.py](./src/visualize.py) source file.
 
 Since most plots repeat and are similar common functions to create them are grouped into this file. 
 
