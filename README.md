@@ -33,7 +33,7 @@ All csv files should be stored in the _csv_ folder, and all net CDF files should
 
 In the main repository folder doc files are contained alongside _.gitignore_ and _README.md_ file. The ignore file makes sure that no dataset files are pushed into the repo as they take a lot of space and no version control is needed for them as the source files are not modifed.
 
-The source files are currently in the new_approach directory. I plan to rename it to src.
+The source files are in _src_ direcotry.
 
 ## Doc files
 These file inform on repo structure and inner workings. They cover custom functions, classes, global variables and set up for running the code. Also, they discuss how to add more data and what was achieved during the internship.
@@ -58,7 +58,7 @@ Other:
 - parula_diy.py: parula colormap as copied from stack overflow
 - training.py: functions and classes used for training
 - visualize.py: functions for visualizations
-- var.py: common variables used in files
+- var.py: common variables used in files mostly for training stage
 
 ## Other files
 - .gitignore: files to not include in version control like intermediate outputs
@@ -137,8 +137,9 @@ Download libraries using the instructions in [setup_venv.md](./setup_venv.md)
 3.  join_csv.ipynb file creates joined datasets, viusalizes the analysis of the distributions and transforms the set
 4.  models.ipynb training different models to see which performs the best
 5.  predict.ipynb predict the results on the inputs and plot them on the map
+6. visualizations.ipynb should run at the end
 
-Other python files in new approach folder contain functions and classes used to make the code work.
+Other python files in src folder contain functions and classes used to make the code work.
 
 ```
                   
@@ -153,6 +154,8 @@ Other python files in new approach folder contain functions and classes used to 
     ┌────┘────┐   
     ∨         ∨   
   predict models  
+         ∨ 
+  visualizations
                   
 
 ```
@@ -161,6 +164,7 @@ Other python files in new approach folder contain functions and classes used to 
 2. fill_env.ipynb
 3. join_csv.ipynb
 4. models.ipynb & predict.ipynb
+5. visualizations.ipynb
 
 # Version history
 
@@ -172,7 +176,7 @@ Other python files in new approach folder contain functions and classes used to 
 - 5.0 after initial model training, the need for more diverse data was discovered. Added bacterial data from more sources. New versions of the exisitng datasets were tried and more visualizations added in the models file to better compare models and datasets.
 - 5.1 Further refinements of the projects code and the model as well as the visualizations. Instructions for adding new data added in [adding new data](./addinstructions.md)
 - 6.0 New approach folder added. Significanlty improved code organization and quality as well as trying to improve model performance.
-- 7.0 End of the working student project. Results are similar to the paper now. 
+- 7.0 End of the working student project. Results are similar to the paper now. More documentation is added in md files.
 
 # Sources
 
