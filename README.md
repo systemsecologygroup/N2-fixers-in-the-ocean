@@ -27,6 +27,11 @@ It should be noted that some of these libraries themselves have dependencies tha
 
 You can find the installation guide for the virtual python environment under [setup_venv.md](./setup_venv.md)
 
+## Branches
+
+- Main: main line version of the code most up to date
+- Internship: version of the code at the time of the internship to preserve it if needed
+
 # File structure
 
 All csv files should be stored in the _csv_ folder, and all net CDF files should be put into a _nc_ folder. The exact names of the files can be found in each jupyter notebook. Usually it is the name of the exel file + specific use case. The ones needed to execute the code are already there.
@@ -41,6 +46,7 @@ These file inform on repo structure and inner workings. They cover custom functi
 - [functions.md](./functions.md)
 - [setup_venv.md](./setup_venv.md)
 - [code_overview.md](./code_overview.md)
+- [methods.md](./methods.md)
 - [README.md](./README.md)
 - [addinstructions.md](./addinstructions.md)
 - [internship_report.pdf](./internship_report.pdf)
