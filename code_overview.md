@@ -166,6 +166,79 @@ And for N:P ratio this is simple division.
 
 # JOIN_CSV
 
+Firstly, both bacterial and environmental data from the previous steps is loaded and basic info is printed out like columns and their intersections. Also, info and describe are used to get an overview of the datasets. 
+
+## Noising the C1,C2,C3
+
+Since the final model used to clearly show circules, likely because of it depending on geographoc coordinates too much a little bit of noise is added to obsucre the relationship between predictions and geography. Also, this step is skipped when predicting and only applied for training.
+
+## Joining together
+
+The env data is grouped by and averaged based on: 'LATITUDE', 'LONGITUDE','DEPTH (m)'. This prevents duplicate rows in the final data. Then _pd.merge_ is used on these columns to created the combined dataframe. The join type is left as we priorotize bacterial data.
+
+## Visualizations to match the paper
+
+2 plots are created to match the paper tang et all. First, uses only tang data for better comparison. The other uses all bacterial data as this type of plot can be useful not only for comparing our data with the paper, but also for overviewing training data. 
+
+## Over 50m depth is removed
+
+The data that lies outside of the region of interest of 50m is removed. This also makes the processing time more reasonable.
+
+## Correlation score 
+
+In order to keep track of the different transforms and their effects a simple correlation score is used as a rule of thumb to see how different operations affect the data. 
+
+## Simple and second transform
+These sections focus on using mathematicla functions like logorithm to transform the data and make patterns in it more visible. They also plot before and after correlation matricies along side the difference between them. 
+
+Algorithm:
+1. plot initial correlation matrix
+2. create transformer
+3. apply transformation
+4. add the coordinates back
+5. save the file
+6. plot the new correlation matrix
+
+Also it is important that coordinates are added back in after transform even though they are not used for training, they are helpful for analysis and visualizations. 
+
+Also I tried removing some of the lowest values at some point to see if it affects the results. 
+
+Logic for second transform is pretty much the same as for the simple one.
+
+## Using synthetic points
+
+One of the strategies involves using synthetic bacterial data close to 0 in order to get better results close to the poles.
+
+1. env data is opened
+2. we filter for points below -50 or above 50 latitude
+3. sample size is specified
+4. random points from the subset are picked based on sample size
+5. for these points a random small value is picked
+6. trichodesmium column adds the small value generated, other columns put NaN
+7. new data is joined to old data and saved
+8. another options is to also apply simple transformer and save the results
+
+## Scikit learn scalers
+
+Scikit learn library can help transform data in a more automatic manner. Here I followed the approached described below:
+
+1. we pick transformer from the library and store them in an array
+
+Then for each of the transformers:
+
+2. combined dataset is transformed with a given scaler
+3. specific transformers are saved
+4. correlation is computed
+5. resuls are printed with mean, median and mode
+
+When the loop completes
+
+6. max results are printed
+
+After everything is done the distributions are shown on histograms for a more visual analysis. 
+
+All transformers from this file are saved using joblib
+
 # MODELS
 
 # PREDICT

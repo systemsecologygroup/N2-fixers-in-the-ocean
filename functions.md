@@ -17,7 +17,7 @@ at [format.py](./src/format.py)
 |filterDepth         | filter out all the rows that are too deep              |
 |setND               | set no data values in the dataframe to a random value close to 0 |
 |roundCoord          | round a list of coordinate columns to integer values   |
-|constructFeatures   | create C1,C2,C3 features based on lat and long cols    |
+|constructFeatures   | create C1,C2,C3 features based on lat and long cols and N:P ratio    |
 |||
 |prePrNifh           | use functions from above to preprocess the data        |
 
