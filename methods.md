@@ -6,20 +6,28 @@ So, if more details are needed please take a look there or at the source files.
 
 ## Pre processing
 
-When opening the files the default nan is switched to "" empty string in order to distringuish no data and not a number
-cells in the table.
+Missing values encoded as empty strings were preserved during import to distinguish between structural missing data and numerical no data
+values where actual recordings were present.
 
-Firstly, all unnecessary columsn are removed and remaining are converted to numerical values. The coordinates
-are converted to integer values for better joining. Then empty rows are removed and ND values replaced with a constant
-in order to later remove duplicates at the end.
+Firstly, all unnecessary columsn were removed and remaining are converted to numerical values. The coordinates
+were converted to integer values, which includes latitude, longitude and depth. Then empty rows were removed 
+and ND values replaced with a constant of -1000 in order to later remove duplicates at the end.
 
-If longitude is  in a different range like 0 to 360 it is itransformed. 
+In order to maintain a consistent range of coordintes it was decided to keep longitude between -180 and 180. If
+for a given source this was not the case, the column range was converted. 
 
-Columns are renamed to a common standard in order to join them together and then all data is concatenated together. 
-For bacterial one can select to use a subset of data instead of all datasets. The recommended subset is Tang and Shio.
+Columns were renamed to a common standard in order to join them together. For bacterial one can select to use a 
+subset of data instead of all datasets. The recommended subset is Tang and Shio. After such choice is made
+the bacterial data is joined. More or less the same pipline was applied to environmental data as well.
 
-Aftre removing duplicates the resulting dataframe is passed through setND again to set the constant that replaces ND
-with a random very small value close to 0.
+After removing duplicates the resulting dataframe was modifies to remove -1000 constants, that signified ND cells
+in the original dataframe and a small random number was placed instead. This is done to prevent the model learning
+to just predict 0 and make the patterns more fussy and unclear.
+
+The flow of data from sources to final file can be seen below.
+
+Bacterial data supplied is in $10^{6} per \;m^{-3}$, which means that when plotting data should be mutliplied by $10^6$ in
+order to match the paper, where it was sourced from.
 
 **Bacterial data preprocessing:**
 ```               
@@ -50,41 +58,82 @@ solar─────────────────────┘
 ```
 
 ## Filling in missing values
-In order to extrapolate onto points where bacterial data is present we compare bacterial and environmental data and pick points,
-where only bacterial data is present. Then for they are added as rows with no data to environmental data dataframe. 
+In order to extrapolate onto points where bacterial data is present we compared bacterial and environmental data and picked points,
+where only bacterial data is present. For such points extrapolation was performed. This was done to have the most training data
+out of available datasets. 
 
-In order to extrapolate to points with no data latitude based averages are used. For points where the methods yields no data
-a neighbourhood is averaged instead to get an approximation of the expected value. 
+In order to extrapolate to points with no data latitude based averages were used. For points where the methods yields no data
+a neighbourhood is averaged instead to get an approximation of the expected value. This gives more or less accurate result for missing
+points, which allows to increase the potential training set.
 
-Other methods to fill NaNs are also explored but the one described above was chosen as the best balance between accuracy
+Other methods to fill NaNs were also explored but the one described above was chosen as the best balance between accuracy
 and execution time.
 
-On a chosen dataset new features are engineered. C1,C2,C3 are based on latitude and longitude and encode geographic data as
+On a chosen dataset new features were engineered. C1,C2,C3 are based on latitude and longitude and encode geographic data as
 well as serve as proxy for other environmental variables that are not included in inputs, but might affect the NiFH gene concenttration. 
-N:P ratio is also computed and added as a column.
+N:P ratio is also computed and added as a column. This is based on Tang et all paper, as the authors there performed the same feature
+engineering step.
+
+$
+C1= sin(latitude \cdot \frac{\pi}{180})\\
+C2= sin(longitude \cdot \frac{\pi}{180}) \cdot cos(latitude \cdot \frac{\pi}{180})\\
+C3= -cos(longitude \cdot \frac{\pi}{180}) \cdot cos(latitude \cdot \frac{\pi}{180})
+$
 
 ## Joining
 
-After eliminating NaN values in environmental data we can join with bacterial data using a left join in order to keep
-only bacterial data rows. Also, duplicate points in space in environmental data are removed using group by and average before the join.
-This prevents duplication of bacterial data after the join operation.
+After extrapolating environmental data to necessary points we joined with bacterial data using a left join in order to keep
+only rows, where bacterial data is present. Also, duplicate points in space in environmental data were removed. This was done using 
+group by and average before the joining with bacterial data. This prevents duplication of bacterial data after the join operation and
+keeps the count of rows available for training consisten with the numbers shown below.
 
-On combined dataset different analysis and transformations are performed in hoped of making it easier to train on and 
-make better predictions. The best transformation was using log10 and adding a constant to the bacterial data. Exact formulas can be
-found in the source code.
+- Trichodesmium nifH Gene (x106 copies m-3)  1539
+- UCYN-A nifH Gene (x106 copies m-3)         1733
+- UCYN-B nifH Gene (x106 copies m-3)         1563
+
+It was also decied to focus on the region of the ocean closer to the surface. So, points deeper than 50m were removed. In order to keep
+the relation betweeb geographic coordinates and final predictions more fussy and less clear during training a small error is added
+in form of a random variable. This prevents the model from focusing too much on C1,C2,C3.
+
+On combined dataset different analysis and transformations were performed in hoped of making it easier to train on and 
+make better predictions. The best transformation was using log and adding a constant to the bacterial data. Exact formulas can be
+found in the source code and below:
+
+```
+"O2":(lambda x: np.log(x*(10**6)+10)),
+"T":(lambda x: np.log((x+10)*(10**6))),
+"N":(lambda x: np.log(x*(10**3)+10)),
+"P":(lambda x: np.log(x*(10**3)+10)),
+"Fe":(lambda x: np.log(x*1000+10)),
+"solar":(lambda x:x),
+"N:P":(lambda x: x),
+"C1": (lambda x: x),
+"C2": (lambda x: x),
+"C3": (lambda x: x),
+'Trichodesmium nifH Gene (x106 copies m-3)':(lambda x: np.log(x*(10**6)+10)),
+'UCYN-A nifH Gene (x106 copies m-3)':(lambda x: np.log(x*(10**6)+10)),
+'UCYN-B nifH Gene (x106 copies m-3)':(lambda x: np.log(x*(10**10)+10))
+```
+
 
 ## Finding the best model
 
-In order to find the best model different models are trained on all available datasets and evaluated based on RMSLE in 
+In order to find the best model different models were trained on all available datasets and evaluated based on RMSLE in 
 order to pick the best pair (model, dataset). RMSLE is used due to large range of values in the data. It captures error
 the best on such long ranges and its values mostly match quality of predicitons. 
 
 In comparison, RMSE doesn't show much difference between pairs, where one is significantly better, than the other.
 
+The conclusion achieved was using simple transformer and Random forest regression. In addition, we tried finding
+the best hyperparameters for the model, but they seem to show little effect on overall accuracy of the results.
+
 ## Predictions
 
-For each feature a model is selected as well as a dataset and then train test split on the datasets is performed. After training all
-environmental data is fetched and transformed to a selected scale, model is used for predictions. Afterwards, a transformation
-to the initial scale is performed. Results are plotted.
+For each feature a model was selected as well as a dataset and then train test split on the datasets was performed. After training all
+environmental data was fetched and transformed to a selected scale, model was used for predictions on all of it. Afterwards, a transformation
+to the initial scale was performed. Results are plotted.
 
-For plottign different configurations are used to get a better look at the data from different angles and understand it better.
+The final dataset was the one mentioned above: simple transformer and a random forest regression model for training and predictions for all
+features. 
+
+For plottign different configurations were used to get a better look at the data from different angles and understand it better.
