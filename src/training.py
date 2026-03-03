@@ -287,6 +287,15 @@ def getData(
 from sklearn.metrics import root_mean_squared_error
 
 def train_model(model, X_train, y_train, model_name="-"):
+    """
+    a wrapper around fir method that trains a given model and print the error score
+
+    Args:
+        model: model to train
+        X_train: data to train on
+        y_train: ground truth for training
+        model_name: print with this name the error score
+    """
     #we train the model
     model.fit(X_train, y_train)
 

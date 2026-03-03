@@ -73,6 +73,17 @@ def filterDepth(df, depth = 50, depth_col = "DEPTH (m)"):
     return df_depth
 
 def setND(dataframe, columns, random=True):
+    """
+    This function modifies columns specidies where it finds ND values to be either close to 0
+    with some noise or -1000 so they can be further modified and compared.
+
+    Args:
+        dataframe: dataframe to modify
+        columns: columns to check for ND values and modify  
+        random: set value as random close to 0 or -1000
+    Returns:
+        nothing
+    """
     #range for the random function
     low = 10.0**(-2)
     high = 10.0**(-6)

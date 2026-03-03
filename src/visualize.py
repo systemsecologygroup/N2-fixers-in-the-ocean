@@ -225,6 +225,17 @@ def plotCorMatr(cols, df, cmap="vlag"):
     return mtrx
 
 def errorScorePlot(scores, error_fun, y_axis, title, color, y_columns):
+    """
+    create a plot that shows different error scores and allows to compare them
+
+    Args:
+        scores: dataframe with error score
+        error_fun: specific error function to plot
+        y_axis: label for y axis of the plot
+        title: title of the plot
+        color: colormap used
+        y_columns: y_columns to plot as different rows of the larger plot
+    """
     fig, axes = plt.subplots(nrows=3, ncols=1, figsize=(10, 20))
     axes = axes.flatten()
 
