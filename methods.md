@@ -15,7 +15,7 @@ in order to later remove duplicates at the end.
 
 If longitude is  in a different range like 0 to 360 it is itransformed. 
 
-Columns are renames to a common standard in order to join them together and then all data is concatenated together. 
+Columns are renamed to a common standard in order to join them together and then all data is concatenated together. 
 For bacterial one can select to use a subset of data instead of all datasets. The recommended subset is Tang and Shio.
 
 Aftre removing duplicates the resulting dataframe is passed through setND again to set the constant that replaces ND
