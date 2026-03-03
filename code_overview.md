@@ -261,7 +261,7 @@ Train test split with data defined in *paths* is performed. Here we pick only ro
 Then in each following cell a model and its name are specifed and *try_model_on_all* is called. 
 
 ## Visualization
-After trying all necessary models the results are plotted for different error scores. The one I pay attention to the most as i find it descrived the situatuon the best it RMSLE as it works best for such ranges unlike R2 or RMSE.
+After trying all necessary models the results are plotted for different error scores. The one I pay attention to the most as i find it described the situatuon the best it RMSLE as it works best for such ranges unlike R2 or RMSE.
 
 ## Linear regression analysis
 This sectiosn trains a linear regression on a selected dataset and then plots the coefficient that can show how related to the final result different inputs are. 
@@ -275,4 +275,50 @@ This sections tried different parameters on the best model, set pair to find low
 
 # PREDICT
 
+Here the initial steps are exactly the same as in the previous file. Data is loaded and train test split is performed.
+
+## Training
+The user specifies the dataset from the *paths* variable to use for each feature as well as the exact model. Then data for it is picked and
+a model is trained for each feature. As a result, 3 models are created 1 for each feature. 
+
+## Predictions
+Predictions on all environmental data take a bit more time and require more steps listed below:
+
+1. inputs.csv file is loaded
+2. we take a subset where values are not NaN(safety)
+3. depth is filtered to match training
+4. geo range from variables file is used for filtering
+5. coordinates are saved for later
+6. for each feature the dataset is transformed to match selected trainign data 
+7. predictions are made using the model trained before
+8. for visualizations backward transform to initial scale
+9. 3 prediction variables are joined into a single dataframe
+10. coordinates are added back in
+11. results are saved to csv
+
+## Visuals
+
+Lastly, different ways to visualize predtictions are used to see data on different scales, depths and such.
+
+## Multioutput model
+
+If the outputs are correlated the mutlioutput model might produce better results. So, in this sections this directions is explored.
+
+1. load data
+2. filter for geo range to make sure latitude is not out of range
+3. use knn imputer to get rid of null in the set
+4. train test split
+5. training a random forest model
+
+Then similar to the predictions section we get preductions for all environmental data. Then the data is plotted.
+
+## Depth integrated results
+
+This sections tried to depth integrate predictions in order to compare with the paper.
+
+# VISUALIZATIONS
+This file contains some further visualizations of results from section below but no data processing.
+
 # SUMMARY
+
+This file gived a high level overview of the project functionality. For further details I recommend reading the code and comments there as well as function descriptions. 
