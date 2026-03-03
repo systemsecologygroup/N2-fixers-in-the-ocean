@@ -127,7 +127,7 @@ into a new format.
 ===================================================================================================
 """
 
-def prePrNifh(df, cord=cordinates_cols, y_col=y_columns, random=True):
+def prePrNifh(df, y_col, cord=cordinates_cols, random=True):
     """
     Preprocess a given nifh dataset so it matches the format expected. 
 
