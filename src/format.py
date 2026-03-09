@@ -85,16 +85,23 @@ def setND(dataframe, columns, random=True):
         nothing
     """
     #range for the random function
-    low = 10.0**(-2)
-    high = 10.0**(-6)
+    high = 10.0**(-2)
+    low = 10.0**(-6)
 
     #if it is not a random value we need to indicate that this is ND. So value out of likely range is choden
-    new_nd = -1000
+    new_nd = -1000.0
 
-    print("Imputing ND values with uniform random distribution between {0} and {1}".format(low, high))
+    if (random):
+        print("Imputing ND values with uniform random distribution between {0} and {1}".format(low, high))
+    else: 
+        print("Imputing ND values with a constant {0}".format(new_nd))
 
     for col in columns:
-        mask = (dataframe[col]=="n.d.") | (dataframe[col]=="ND") |  (dataframe[col]=="nan") | (dataframe[col]=="dnq")  | (dataframe[col]=="bd") | (dataframe[col]==new_nd)
+        col_str = dataframe[col].astype(str).str.strip()
+
+        mask = (col_str=="n.d.") | (col_str=="ND") |  (col_str=="nan") | (col_str=="dnq")  | (col_str=="bd") | (dataframe[col]==new_nd)
+        dataframe[col] = pd.to_numeric(dataframe[col], errors="coerce")
+
         if (random):
             dataframe.loc[mask, col]=np.random.uniform(low, high, size=mask.sum())#used to be just 0
         else:
