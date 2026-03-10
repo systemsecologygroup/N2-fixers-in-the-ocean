@@ -8,7 +8,7 @@ The project was further developed and extended during a working student contract
 
 # Requirements
 
-- Python
+- Python3.13
 - Jupyter notebooks
 
 ## Libraries:
@@ -129,7 +129,9 @@ tree -L 2 --gitignore --dirsfirst
 
 # Set up
 
-If you want to not only view but also run the jupyter notebooks you will need to make sure that all libraries listed above are installed. 
+If you want to not only view but also run the jupyter notebooks you will need to make sure that all libraries listed above are installed. They are
+also listed in the libraries.txt file. I used VS code with extension to run the code. So, instructions are tailored to using it as the main
+code editor for this project. 
 
 ## Step by step guide
 
