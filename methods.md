@@ -87,9 +87,9 @@ only rows, where bacterial data is present. Also, duplicate points in space in e
 group by and average before the joining with bacterial data. This prevents duplication of bacterial data after the join operation and
 keeps the count of rows available for training consisten with the numbers shown below.
 
-- Trichodesmium nifH Gene (x106 copies m-3)  1539
-- UCYN-A nifH Gene (x106 copies m-3)         1733
-- UCYN-B nifH Gene (x106 copies m-3)         1563
+- Trichodesmium nifH Gene (x106 copies m-3)  1519
+- UCYN-A nifH Gene (x106 copies m-3)         1716
+- UCYN-B nifH Gene (x106 copies m-3)         1542
 
 It was also decied to focus on the region of the ocean closer to the surface. So, points deeper than 50m were removed. In order to keep
 the relation betweeb geographic coordinates and final predictions more fussy and less clear during training a small error is added
