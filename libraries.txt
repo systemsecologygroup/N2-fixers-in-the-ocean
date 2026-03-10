@@ -1,0 +1,9 @@
+numpy
+pandas
+xarray
+cartopy
+matplotlib
+scikit-learn
+seaborn
+joblib
+netcdf4
